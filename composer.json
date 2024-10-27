@@ -1,4 +1,8 @@
 {
+    "name": "mydemovendor/mydemopackage",
+    "description": "A sample PHP project for Composer installation.",
+    "type": "SDK",
+    "license": "MIT",
     "require": {
         "psr/http-factory": "^1.1",
         "psr/http-client": "^1.0",
