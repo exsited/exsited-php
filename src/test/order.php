@@ -771,7 +771,7 @@ class OrderManager
 //    $orderManager->testChangeBillingPreferences();
 //    $orderManager->testUpdateBillingPreferences();
 //    $orderManager->testReadDetails();
-//    $orderManager->testCreate();
+   $orderManager->testCreate();
 //    $orderManager->testCancel();
 //    $orderManager->testCreateWithFamilyType();
 //    $orderManager->testUpgrade();
@@ -779,4 +779,4 @@ class OrderManager
 //    $orderManager->testUpgradePreview();
 //    $orderManager->testDowngradePreview();
 //    $orderManager->testCreateExpress();
-    $orderManager->testChangePaymentMethod();
+    // $orderManager->testChangePaymentMethod();

@@ -618,10 +618,10 @@ class AccountManager
 
 //    Test Function Call here
     $accountManager = new AccountManager();
-    $accountManager->testReadAll();
+    // $accountManager->testReadAll();
 //    $accountManager->testReadDetails();
 //    $accountManager->testReadDetailsInformation();
-//    $accountManager->testCreate();
+   $accountManager->testCreate();
 //    $accountManager->testUpdate();
 //    $accountManager->testDelete();
 //    $accountManager->testCreatePayment();
