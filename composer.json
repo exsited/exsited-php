@@ -1,11 +1,11 @@
 {
-    "name": "apidemo/autobill-sdkdemo",
+    "name": "exsitedapidemo/autobill-exsitedemo",
     "description": "AutoBill System SDK",
     "license": "proprietary",
     "authors": [
         {
             "name": "AutoBill System Developer",
-            "email": "mhjony336@gmail.com"
+            "email": "mehedi@webalive.com.au"
         }
     ],
     "minimum-stability": "dev",
