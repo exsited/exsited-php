@@ -1,11 +1,11 @@
 {
-    "name": "exsitedapidemo/autobill-exsitedemo",
-    "description": "AutoBill System SDK",
-    "license": "proprietary",
+    "name": "exsitedapi/exsited-sdk",
+    "description": "The Exsited SDK is designed to simplify the integration of Exsited's powerful services into your applications. With an intuitive interface and robust functionality, the SDK enables developers to harness the full potential of Exsited's offerings with ease. Whether you are building a new application or enhancing an existing one, the Exsited SDK provides the tools you need to succeed.",
+    "license": "MIT",
     "authors": [
         {
-            "name": "AutoBill System Developer",
-            "email": "mehedi@webalive.com.au"
+            "name": "Ashiq Rahman",
+            "email": "ashiq@webalive.com.au"
         }
     ],
     "minimum-stability": "dev",
