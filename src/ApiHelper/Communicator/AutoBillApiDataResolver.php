@@ -29,7 +29,6 @@ class AutoBillApiDataResolver
         }else{
             $apiResponse = $httpCommunication->GET($authCredentialData->getApiUrl() . $apiRequestData->url, $apiRequestData->params);
         }
-
         return $apiResponse;
     }
 

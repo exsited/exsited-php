@@ -1,23 +1,13 @@
 {
-    "name": "exsitedapi/exsited-sdk",
-    "description": "The Exsited SDK is designed to simplify the integration of Exsited's powerful services into your applications. With an intuitive interface and robust functionality, the SDK enables developers to harness the full potential of Exsited's offerings with ease. Whether you are building a new application or enhancing an existing one, the Exsited SDK provides the tools you need to succeed.",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Ashiq Rahman",
-            "email": "ashiq@webalive.com.au"
-        }
-    ],
-    "minimum-stability": "dev",
     "require": {
-        "php": ">=7.0",
-        "ext-json": "*",
-        "ext-curl": "*"
+        "psr/http-factory": "^1.1",
+        "psr/http-client": "^1.0",
+        "php-http/client-common": "^2.7"
     },
-    "autoload": {
-        "psr-4": {
-            "Api\\": "src/"
-        }
+    "require-dev": {
+        "php-http/curl-client": "^2.3",
+        "laminas/laminas-diactoros": "2.17",
+        "psr/http-message": "1.0"
     },
     "config": {
         "allow-plugins": {

@@ -47,7 +47,4 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-# Ignore token.json
-token.json
-
 

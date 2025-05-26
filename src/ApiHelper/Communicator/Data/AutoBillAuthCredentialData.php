@@ -24,6 +24,7 @@ class AutoBillAuthCredentialData
     }
 
 
+
     /**
      * @return mixed
      */

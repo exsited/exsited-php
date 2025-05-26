@@ -37,13 +37,9 @@ class ConfigManager
 //        return $response;
 //    }
 
-
-
     public function getConfig() {
-        $rootDir = dirname(__DIR__, 3);
-        $publicPath = $rootDir . '/token.json';
-
-        $getJsonObject = file_get_contents($publicPath);
+        $publicPath = base_path().'/public';
+        $getJsonObject = file_get_contents($publicPath."/token.json");
         $jsonObject = json_decode($getJsonObject);
 
         $authCredential = new AutoBillAuthCredentialData([
@@ -55,20 +51,15 @@ class ConfigManager
             'refresh_token' => $jsonObject->refresh_token,
             'redirect_uri' => $jsonObject->redirect_uri,
             'authTokenRenewCallback' => function($authCredentialData) use ($publicPath){
-                file_put_contents($publicPath, json_encode((array) $authCredentialData));
+                file_put_contents($publicPath."/token.json", json_encode((array) $authCredentialData));
             }
         ]);
+
         return $authCredential;
-
     }
-
-
 
     public function getAccessToken($apiUrl, $params= []){
         return $this->httpCommunicator->POST_JSON($apiUrl, $params);
     }
 
 }
-
-
-
