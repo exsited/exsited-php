@@ -3,7 +3,7 @@ namespace Api\Component;
 
 use Api\ApiHelper\Communicator\Data\AutoBillAuthCredentialData;
 use Api\AppService\Account\AccountData;
-//use Api\AppService\Product\ProductData;
+use Api\AppService\Product\ProductData;
 
 class ApiConfig
 {
@@ -23,8 +23,8 @@ class ApiConfig
         return new AccountData($this);
     }
 
-//    public function productData() {
-//        return new ProductData($this);
-//    }
+    public function productData() {
+        return new ProductData($this);
+    }
 
 }

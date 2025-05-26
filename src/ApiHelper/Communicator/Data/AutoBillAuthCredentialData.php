@@ -12,6 +12,7 @@ class AutoBillAuthCredentialData
     private $access_token;
     private $refresh_token;
     private $redirect_uri;
+    private $file_path;
     private $authTokenRenewCallback;
 
     public function __construct($params = [])
@@ -22,7 +23,6 @@ class AutoBillAuthCredentialData
             }
         }
     }
-
 
 
     /**
@@ -137,17 +137,24 @@ class AutoBillAuthCredentialData
         $this->redirect_uri = $redirect_uri;
     }
 
+    public function getFilePath()
+    {
+        return $this->file_path;
+    }
+
     /**
      * @return mixed
      */
+
+
     public function getAuthTokenRenewCallback()
     {
         return $this->authTokenRenewCallback;
     }
-
     /**
      * @param mixed $authTokenRenewCallback
      */
+
     public function setAuthTokenRenewCallback($authTokenRenewCallback)
     {
         $this->authTokenRenewCallback = $authTokenRenewCallback;

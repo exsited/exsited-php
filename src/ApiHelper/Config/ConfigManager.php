@@ -1,45 +1,41 @@
 <?php
 
-
 namespace Api\ApiHelper\Config;
 
-
 use Api\ApiHelper\Communicator\AutoBillApiCaller;
-use Api\ApiHelper\Communicator\Data\AutoBillApiRequestData;
 use Api\ApiHelper\Communicator\Data\AutoBillAuthCredentialData;
+use Api\ApiHelper\SdkVersionManager;
+use Dotenv\Dotenv;
 
 class ConfigManager
 {
-
+    private $httpCommunicator;
 
     /**
      * ConfigManager constructor.
-     * @param $httpCommunicator
      */
     public function __construct()
     {
+        $rootDir = dirname(__DIR__, 3);
+        $sdkConfigPath = $rootDir . '/sdk-config.json';
+        $getSdkConfigObject = file_get_contents($sdkConfigPath);
+        $sdkConfig = json_decode($getSdkConfigObject);
+        $apiVersion = $sdkConfig->apiVersion ?: 'v2';
+        SdkVersionManager::setApiVersion($apiVersion);
         $this->httpCommunicator = AutoBillApiCaller::getInstance();
     }
 
 
-//    public function getFile() {
-//        $fileName = "token.json";
-//        $initialConfig = "{'apiUrl':'https://dev-api.autobill.com','appUrl':'https://dev-app.autobill.com','clientId':'','clientSecret':'','accessToken':'','refreshToken':'', 'redirectUrl':''}";
-//
-//        $getFile = file_get_contents($fileName);
-//        $response = "";
-//        if (!file_exists($getFile)) {
-//            file_put_contents($fileName, $initialConfig);
-//            $response = file_get_contents($fileName);
-//        } else {
-//            $response = file_get_contents($fileName);
-//        }
-//        return $response;
-//    }
+    /**
+     * Loads API configuration from token.json
+     * @return AutoBillAuthCredentialData
+     */
+    public function getConfig()
+    {
+        $rootDir = dirname(__DIR__, 3);
+        $publicPath = $rootDir . '/token.json';
 
-    public function getConfig() {
-        $publicPath = base_path().'/public';
-        $getJsonObject = file_get_contents($publicPath."/token.json");
+        $getJsonObject = file_get_contents($publicPath);
         $jsonObject = json_decode($getJsonObject);
 
         $authCredential = new AutoBillAuthCredentialData([
@@ -50,16 +46,23 @@ class ConfigManager
             'access_token' => $jsonObject->access_token,
             'refresh_token' => $jsonObject->refresh_token,
             'redirect_uri' => $jsonObject->redirect_uri,
-            'authTokenRenewCallback' => function($authCredentialData) use ($publicPath){
-                file_put_contents($publicPath."/token.json", json_encode((array) $authCredentialData));
+            'file_path' => $publicPath,
+            'authTokenRenewCallback' => function ($authCredentialData) use ($publicPath) {
+                file_put_contents($publicPath, json_encode((array)$authCredentialData));
             }
         ]);
 
         return $authCredential;
     }
 
-    public function getAccessToken($apiUrl, $params= []){
+    /**
+     * Sends a POST request to fetch the access token
+     * @param string $apiUrl
+     * @param array $params
+     * @return mixed
+     */
+    public function getAccessToken($apiUrl, $params = [])
+    {
         return $this->httpCommunicator->POST_JSON($apiUrl, $params);
     }
-
 }

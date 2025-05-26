@@ -47,4 +47,10 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+# Ignore token.json
+token.json
+# Ignore environment file
+#ignore sdk configuration
+sdk-config.json
+
 

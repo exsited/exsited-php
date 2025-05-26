@@ -29,7 +29,18 @@ class AutoBillApiDataResolver
         }else{
             $apiResponse = $httpCommunication->GET($authCredentialData->getApiUrl() . $apiRequestData->url, $apiRequestData->params);
         }
-        return $apiResponse;
+
+        if (!empty($apiResponse)) {
+            $apiResponse = (array) $apiResponse;
+            $apiResponse["autobillCredential"] = (object)[
+                "apiUrl"=>$authCredentialData->getApiUrl() . $apiRequestData->url,
+                "appUrl"=>$authCredentialData->getAppUrl(),
+                "ClientId"=>$authCredentialData->getClientId(),
+                "ClientSecret"=>$authCredentialData->getClientSecret(),
+                "file_path" =>$authCredentialData->getFilePath()
+            ];
+        }
+        return (object)$apiResponse;
     }
 
     public function getPostParamsData($url){
