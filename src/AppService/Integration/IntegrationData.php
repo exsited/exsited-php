@@ -118,4 +118,40 @@ class IntegrationData
             throw new AutoBillApiException($e->getMessage());
         }
     }
+
+    public function getIntegrationCurrencies($integrationUuid, $apiVersion = null)
+    {
+        $attribute = "integration/$integrationUuid/currency";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::GET, $integrationUuid, null, $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function disableIntegrationCurrency($integrationUuid, $currencyName, $apiVersion = null)
+    {
+        $attribute = "integration/$integrationUuid/currency/$currencyName/disable";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, null, $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function enableIntegrationCurrency($integrationUuid, $currencyName, $apiVersion = null)
+    {
+        $attribute = "integration/$integrationUuid/currency/$currencyName/enable";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, null, $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
 }
