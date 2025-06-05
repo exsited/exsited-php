@@ -75,6 +75,191 @@ class IntegrationData
         }
     }
 
+    public function read($uuid, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION_CONNECTIONS, AutoBillApiSchemeHelper::GET, $uuid, null,null, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function readPartner($integrationUuid, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::GET, $integrationUuid, null,'partner-function', $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function readPartnerDetails($integrationUuid, $partnerUuid, $apiVersion = null)
+    {
+        $attribute = "partner-function/$partnerUuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::GET, $integrationUuid, null, $attribute, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function readAutomation($integrationUuid, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::GET, $integrationUuid, null,'automation/', $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function readAutomationDetails($integrationUuid, $automationUuid, $apiVersion = null)
+    {
+        $attribute = "automation/$automationUuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::GET, $integrationUuid, null, $attribute, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function createPartnerFunction($integrationUuid, $params, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, $params, 'partner-function', $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function updateConfiguration($uuid, $params, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::PATCH,$uuid,$params,'configuration',$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function updatePartnerDetails($integrationUuid, $partnerUuid, $params, $apiVersion = null)
+    {
+        $attribute = "partner-function/$partnerUuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::PATCH, $integrationUuid, $params, $attribute, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+    public function deletePartnerDetails($integrationUuid, $partnerUuid, $apiVersion = null)
+    {
+        $attribute = "partner-function/$partnerUuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::DELETE, $integrationUuid, null, $attribute, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function checkConnection($integrationUuid, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, null,'check-connection', $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function automationDisable($integrationUuid, $automationUuid, $apiVersion = null)
+    {
+        $attribute = "automation/$automationUuid/disable";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, null, $attribute, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function automationEnable($integrationUuid, $automationUuid, $apiVersion = null)
+    {
+        $attribute = "automation/$automationUuid/enable";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, null, $attribute, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function addAutomation($integrationUuid, $params, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, $params,'automation', $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function updateAutomation($integrationUuid, $automationUuid, $params, $apiVersion = null)
+    {
+        $attribute = "automation/$automationUuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::PATCH, $integrationUuid, $params,$attribute, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+    public function deleteAutomation($automationUuid, $apiVersion = null)
+    {
+        $attWithId = "automation/$automationUuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::delete, $attWithId, null,null, $apiVersion);
+
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
     public function partnerFunctionDisable($integrationUuid, $partnerFunctionUuid, $apiVersion = null)
     {
         $attribute = "partner-function/$partnerFunctionUuid/disable";
@@ -133,7 +318,7 @@ class IntegrationData
 
     public function disableIntegrationCurrency($integrationUuid, $currencyName, $apiVersion = null)
     {
-        $attribute = "integration/$integrationUuid/currency/$currencyName/disable";
+        $attribute = "currency/$currencyName/disable";
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
@@ -145,7 +330,7 @@ class IntegrationData
 
     public function enableIntegrationCurrency($integrationUuid, $currencyName, $apiVersion = null)
     {
-        $attribute = "integration/$integrationUuid/currency/$currencyName/enable";
+        $attribute = "currency/$currencyName/enable";
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
