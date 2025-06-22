@@ -6,6 +6,9 @@
     "config": {
         "platform": {
             "php": ">=7.4"
+        },
+        "allow-plugins": {
+            "php-http/discovery": true
         }
     },
     "require": {
@@ -18,11 +21,6 @@
     "require-dev": {
         "php-http/curl-client": "^2.3",
         "laminas/laminas-diactoros": "^2.0 || ^3.0"
-    },
-    "config": {
-        "allow-plugins": {
-            "php-http/discovery": true
-        }
     },
     "autoload": {
         "psr-4": {
