@@ -1,6 +1,8 @@
 {
     "name": "exsited/exsited-sdk",
     "description": "PHP SDK for the Exsited API",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "config": {
         "platform": {
             "php": ">=7.4"
