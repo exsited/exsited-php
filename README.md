@@ -34,7 +34,7 @@ cd my_cakephp_project
 
 ### Step 1: Install the SDK Package
 ```bash
-composer require exsitedapi/exsited-sdk:dev-main
+composer require exsitedapi/exsited-sdk:dev-main --with-all-dependencies
 ```
 
 ### Step 2: Verify Installation
