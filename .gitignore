@@ -52,5 +52,3 @@ token.json
 # Ignore environment file
 #ignore sdk configuration
 sdk-config.json
-
-

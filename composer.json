@@ -1,7 +1,14 @@
 {
+    "name": "exsited/exsited-sdk",
+    "description": "PHP SDK for the Exsited API",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "config": {
         "platform": {
-            "php": ">=7.4"
+            "php": "7.4.0"
+        },
+        "allow-plugins": {
+            "php-http/discovery": true
         }
     },
     "require": {
@@ -14,11 +21,6 @@
     "require-dev": {
         "php-http/curl-client": "^2.3",
         "laminas/laminas-diactoros": "^2.0 || ^3.0"
-    },
-    "config": {
-        "allow-plugins": {
-            "php-http/discovery": true
-        }
     },
     "autoload": {
         "psr-4": {
