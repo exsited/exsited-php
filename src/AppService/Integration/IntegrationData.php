@@ -339,4 +339,59 @@ class IntegrationData
             throw new AutoBillApiException($e->getMessage());
         }
     }
+
+    public function syncCurrencies($integrationUuid, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion     = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(
+                ApiResource::INTEGRATION,
+                AutoBillApiSchemeHelper::POST,
+                $integrationUuid,
+                null,
+                'sync-currencies',
+                $apiVersion
+            );
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function syncAccountingCodes($integrationUuid, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion     = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(
+                ApiResource::INTEGRATION,
+                AutoBillApiSchemeHelper::POST,
+                $integrationUuid,
+                null,
+                'sync-accounting-codes',
+                $apiVersion
+            );
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function syncTaxes($integrationUuid, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion     = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(
+                ApiResource::INTEGRATION,
+                AutoBillApiSchemeHelper::POST,
+                $integrationUuid,
+                null,
+                'sync-taxes',
+                $apiVersion
+            );
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
 }
