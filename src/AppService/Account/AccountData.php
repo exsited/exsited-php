@@ -92,6 +92,7 @@ class AccountData
         $attribute = "payment-methods/" . $ref;
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
             return $requestBuilder->callResourceAttribute(ApiResource::ACCOUNT, AutoBillApiSchemeHelper::DELETE, $id, [], $attribute,$apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
