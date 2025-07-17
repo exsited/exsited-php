@@ -8,6 +8,7 @@ use Api\AppService\AutoBillApiException;
 use Api\AppService\AutoBillUtil;
 use Api\ApiHelper\Constant\AutoBillConstant;
 use stdClass;
+use Api\ApiHelper\Config\ConfigManager;
 
 class AutoBillOAuth2ApiCaller
 {
@@ -24,10 +25,17 @@ class AutoBillOAuth2ApiCaller
 
     public function __construct(AutoBillAuthCredentialData $authCredentialData = null, $jsonDecodeArray = true)
     {
-        $this->httpCommunicator = AutoBillApiCaller::getInstance();
+        $this->httpCommunicator = AutoBillApiCaller::getInstance(ConfigManager::getSdkConfig()['reQuestTimeOut'] ?? 240);
         $this->authCredentialData = $authCredentialData;
         $this->tokenRenewCallback = $authCredentialData->getAuthTokenRenewCallback();
-        $this->setAccessToken($authCredentialData->getAccessToken());
+
+        $accessToken = $authCredentialData->getAccessToken();
+        if (empty($accessToken)) {
+            $this->getAccessToken();
+        } else {
+            $this->setAccessToken($accessToken);
+        }
+
         $this->jsonDecodeArray = $jsonDecodeArray;
     }
 
@@ -153,10 +161,19 @@ class AutoBillOAuth2ApiCaller
 
     private function responseProcessor($apiResponse){
         try {
-            if (isset($apiResponse['code']) && in_array($apiResponse['code'], [200, 201, 202, 204,302]) && isset($apiResponse['response'])){
+            if (isset($apiResponse['code']) && in_array($apiResponse['code'], [200, 201, 202, 204]) && isset($apiResponse['response'])){
                 $this->loop = 0;
                 return json_decode($apiResponse['response']);
             } else {
+                if (isset($apiResponse['code']) && in_array($apiResponse['code'], [401, 302])) {
+                    if ($this->loop < 3) {
+                        $this->loop++;
+                        $this->renewAccessToken($apiResponse['code']);
+                        throw new AutoBillApiException(self::REQUEST_AGAIN);
+                    } else {
+                        throw new AutoBillApiException("Token renewal failed after 3 attempts.");
+                    }
+                }
                 if (isset($apiResponse['response'])) {
                     $requestResponse = new stdClass();
                     $responseDecode = json_decode($apiResponse['response']);

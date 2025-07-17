@@ -393,5 +393,4 @@ class IntegrationData
             throw new AutoBillApiException($e->getMessage());
         }
     }
-
 }

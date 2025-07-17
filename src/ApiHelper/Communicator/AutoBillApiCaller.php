@@ -13,7 +13,7 @@ class AutoBillApiCaller
     const PATCH = "PATCH";
     const APPLICATION_JSON_CONTEXT_TYPE = "application/json";
     const CONTEXT_TYPE = "Content-Type";
-    public $reQuestTimeOut = 240;
+    public $reQuestTimeOut;
 
     public function DELETE_JSON($url, $params, $headers = array()){
         $jsonHeader = [self::CONTEXT_TYPE . ":" . self:: APPLICATION_JSON_CONTEXT_TYPE];
@@ -124,7 +124,13 @@ class AutoBillApiCaller
         );
     }
 
-    public static function getInstance(){
-        return new AutoBillApiCaller();
+    public function __construct($timeout = 240)
+    {
+        $this->reQuestTimeOut = $timeout;
+    }
+
+    public static function getInstance($timeout = 240)
+    {
+        return new AutoBillApiCaller($timeout);
     }
 }

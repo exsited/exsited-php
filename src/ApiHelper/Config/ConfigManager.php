@@ -10,6 +10,7 @@ use Dotenv\Dotenv;
 class ConfigManager
 {
     private $httpCommunicator;
+    private static $sdkConfig = [];
 
     /**
      * ConfigManager constructor.
@@ -19,10 +20,17 @@ class ConfigManager
         $rootDir = dirname(__DIR__, 3);
         $sdkConfigPath = $rootDir . '/sdk-config.json';
         $getSdkConfigObject = file_get_contents($sdkConfigPath);
-        $sdkConfig = json_decode($getSdkConfigObject);
-        $apiVersion = $sdkConfig->apiVersion ?: 'v2';
+        self::$sdkConfig = json_decode($getSdkConfigObject, true);
+
+        $apiVersion = self::$sdkConfig['apiVersion'] ?? 'v2';
         SdkVersionManager::setApiVersion($apiVersion);
-        $this->httpCommunicator = AutoBillApiCaller::getInstance();
+
+        $this->httpCommunicator = AutoBillApiCaller::getInstance(self::$sdkConfig['reQuestTimeOut'] ?? 240);
+    }
+
+    public static function getSdkConfig(): array
+    {
+        return self::$sdkConfig;
     }
 
 
@@ -30,13 +38,19 @@ class ConfigManager
      * Loads API configuration from token.json
      * @return AutoBillAuthCredentialData
      */
-    public function getConfig()
+    public function getConfig($index = 0)
     {
         $rootDir = dirname(__DIR__, 3);
         $publicPath = $rootDir . '/token.json';
 
         $getJsonObject = file_get_contents($publicPath);
-        $jsonObject = json_decode($getJsonObject);
+        $jsonArray = json_decode($getJsonObject, true);
+
+        if (!isset($jsonArray[$index])) {
+            throw new \Exception("No config found at index $index");
+        }
+
+        $jsonObject = (object)$jsonArray[$index];
 
         $authCredential = new AutoBillAuthCredentialData([
             'apiUrl' => $jsonObject->apiUrl,
@@ -47,8 +61,9 @@ class ConfigManager
             'refresh_token' => $jsonObject->refresh_token,
             'redirect_uri' => $jsonObject->redirect_uri,
             'file_path' => $publicPath,
-            'authTokenRenewCallback' => function ($authCredentialData) use ($publicPath) {
-                file_put_contents($publicPath, json_encode((array)$authCredentialData));
+            'authTokenRenewCallback' => function ($authCredentialData) use (&$jsonArray, $index, $publicPath) {
+                $jsonArray[$index] = (array) $authCredentialData;
+                file_put_contents($publicPath, json_encode($jsonArray, JSON_PRETTY_PRINT));
             }
         ]);
 
