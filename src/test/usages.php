@@ -10,10 +10,10 @@ class UsagesManager
 {
     private $usagesService;
 
-    public function __construct()
+    public function __construct($index = 0)
     {
         $configManager = new ConfigManager();
-        $authCredentialData = $configManager->getConfig();
+        $authCredentialData = $configManager->getConfig($index);
         $apiConfig = new ApiConfig($authCredentialData);
         $this->usagesService = new UsagesData($apiConfig);
     }

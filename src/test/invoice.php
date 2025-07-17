@@ -8,10 +8,10 @@ use Api\ApiHelper\Config\ConfigManager;
 class InvoiceManager
 {
     private $invoiceService;
-    public function __construct()
+    public function __construct($index = 0)
     {
         $configManager = new ConfigManager();
-        $authCredentialData = $configManager->getConfig();
+        $authCredentialData = $configManager->getConfig($index);
         $apiConfig = new ApiConfig($authCredentialData);
         $this->invoiceService = new InvoiceData($apiConfig);
     }

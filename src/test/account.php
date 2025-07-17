@@ -9,10 +9,10 @@ class AccountManager
 {
     private $accountService;
 
-    public function __construct()
+    public function __construct($index = 0)
     {
         $configManager = new ConfigManager();
-        $authCredentialData = $configManager->getConfig();
+        $authCredentialData = $configManager->getConfig($index);
         $apiConfig = new ApiConfig($authCredentialData);
         $this->accountService = new AccountData($apiConfig);
     }
@@ -697,8 +697,8 @@ class AccountManager
 
 
 //    Test Function Call here
-    $accountManager = new AccountManager();
-//    $accountManager->testReadAll();
+    $accountManager = new AccountManager(0);
+    $accountManager->testReadAll();
 //    $accountManager->testReadDetails();
 //    $accountManager->testReadDetailsInformation();
 //    $accountManager->testCreate();

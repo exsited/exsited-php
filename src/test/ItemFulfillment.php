@@ -10,10 +10,10 @@ class ItemFulfilmentManager
 {
     private $itemFulfillmentService;
 
-    public function __construct()
+    public function __construct($index = 0)
     {
         $configManager = new ConfigManager();
-        $authCredentialData = $configManager->getConfig();
+        $authCredentialData = $configManager->getConfig($index);
         $apiConfig = new ApiConfig($authCredentialData);
         $this->itemFulfillmentService = new ItemFulfillmentData($apiConfig);
     }
