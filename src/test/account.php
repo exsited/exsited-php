@@ -20,7 +20,8 @@ class AccountManager
     public function testReadAll()
     {
         try {
-            $response = $this->accountService->readAll('v2');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->accountService->readAll(null, $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -146,10 +147,10 @@ class AccountManager
 
     public function testDeletePaymentMethod()
     {
-        $id = "FKITFZ";
-        $ref = "Reference-Ch";
+        $id = "SRK928";
+        $ref = "card_1RkkT4JjDfoQRmbhSBUPIREJ";
         try {
-            $response = $this->accountService->deletePaymentMethod($id, $ref,'v3');
+            $response = $this->accountService->deletePaymentMethod($id, $ref,'v2');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -697,8 +698,10 @@ class AccountManager
 
 
 //    Test Function Call here
-    $accountManager = new AccountManager(0);
+    $accountManager = new AccountManager(2);
     $accountManager->testReadAll();
+//    $accountManager2 = new AccountManager(1);
+//    $accountManager2->testReadAll();
 //    $accountManager->testReadDetails();
 //    $accountManager->testReadDetailsInformation();
 //    $accountManager->testCreate();

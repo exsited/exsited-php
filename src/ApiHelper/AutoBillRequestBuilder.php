@@ -64,12 +64,16 @@ class AutoBillRequestBuilder
     }
 
 
-    public function callResource($apiResource, $requestMethod, $id = null, $params = [], $apiVersion) {
+    public function callResource($apiResource, $requestMethod, $id = null, $params = [], $apiVersion = 'v3', $queryParams = null) {
 
         $path = "api/{$apiVersion}/" . $apiResource;
 
         if ($id != null) {
             $path = $path . '/' . $id;
+        }
+
+        if ($queryParams != null) {
+            $path = $path . '/' . $queryParams;
         }
 
         if ($requestMethod == AutoBillApiSchemeHelper::PATCH) {
@@ -117,7 +121,7 @@ class AutoBillRequestBuilder
         }
     }
 
-    public function callResourceAttribute($apiResource, $requestMethod, $id = null, $params = null, $attribute = null, $apiVersion) {
+    public function callResourceAttribute($apiResource, $requestMethod, $id = null, $params = null, $attribute = null, $apiVersion = 'v3', $queryParams = null) {
 
         $path = "api/{$apiVersion}/{$apiResource}";
 
@@ -126,6 +130,10 @@ class AutoBillRequestBuilder
             if ($attribute !== null) {
                 $path .= '/' . $attribute;
             }
+        }
+
+        if ($queryParams != null) {
+            $path = $path . '/' . $queryParams;
         }
 
         try {

@@ -80,9 +80,9 @@ class InvoiceManager
     public function testReadAccountInvoices()
     {
         $accountId='76GOU2';
-
+        $queryParams = '?order_by=created_on&direction=desc&limit=2';
         try {
-            $response = $this->invoiceService->readAccountInvoices($accountId,[],'v3');
+            $response = $this->invoiceService->readAccountInvoices($accountId,[],'v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();

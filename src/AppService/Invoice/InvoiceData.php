@@ -72,12 +72,12 @@ Class InvoiceData
             throw new AutoBillApiException($e->getMessage());
         }
     }
-    public function readAccountInvoices($accountID, $params = [],$apiVersion = null)
+    public function readAccountInvoices($accountID, $params = [],$apiVersion = null, $queryParams = null)
     {
         try {
             $requestBuilder= new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(ApiResource::ACCOUNT, AutoBillApiSchemeHelper::GET, $accountID, $params, 'invoices',$apiVersion);
+            return $requestBuilder->callResourceAttribute(ApiResource::ACCOUNT, AutoBillApiSchemeHelper::GET, $accountID, $params, 'invoices',$apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
