@@ -393,4 +393,42 @@ class IntegrationData
             throw new AutoBillApiException($e->getMessage());
         }
     }
+
+    public function linkItems($integrationUuid, $params = [], $apiVersion = null)
+    {
+        $attribute = 'link-items';
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(
+                ApiResource::INTEGRATION,
+                AutoBillApiSchemeHelper::POST,
+                $integrationUuid,
+                $params,
+                $attribute,
+                $apiVersion
+            );
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function unlinkItems($integrationUuid, $params = [], $apiVersion = null)
+    {
+        $attribute = 'unlink-items';
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(
+                ApiResource::INTEGRATION,
+                AutoBillApiSchemeHelper::POST,
+                $integrationUuid,
+                $params,
+                $attribute,
+                $apiVersion
+            );
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
 }
