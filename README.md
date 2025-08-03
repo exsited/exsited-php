@@ -46,23 +46,24 @@ composer require exsitedapi/exsited-sdk:dev-main --with-all-dependencies
 In `vendor/apidemo/autobill-sdkdemo/`, create `token.json`:
 ```json
 [
-{
-  "apiUrl": "https://api-stage.exsited.com/",
-  "appUrl": "https://api-stage.exsited.com/",
-  "client_id": "[YOUR_CLIENT_ID]",
-  "client_secret": "[YOUR_CLIENT_SECRET]",
-  "access_token": "[YOUR_ACCESS_TOKEN]",
-  "refresh_token": "[YOUR_REFRESH_TOKEN]",
-  "redirect_uri": "https://www.google.com",
-  "authTokenRenewCallback": {}
-}
+  {
+    "apiUrl": "https://api-stage.exsited.com/",
+    "appUrl": "https://api-stage.exsited.com/",
+    "client_id": "[YOUR_CLIENT_ID]",
+    "client_secret": "[YOUR_CLIENT_SECRET]",
+    "access_token": "[YOUR_ACCESS_TOKEN]",
+    "refresh_token": "[YOUR_REFRESH_TOKEN]",
+    "redirect_uri": "https://www.google.com",
+    "authTokenRenewCallback": {}
+  }
 ]
 ```
 
 ### Step 2: Create `sdk-config.json`
 ```json
 {
-  "apiVersion": "v3"
+  "apiVersion": "v3",
+  "reQuestTimeOut": 240
 }
 ```
 
@@ -160,3 +161,4 @@ Visit: `http://localhost:8765/sdk/account-create`
 ## Conclusion
 
 Your CakePHP project is now configured with the Exsited PHP SDK and ready to make API calls. For issues, verify credentials and configurations.
+
