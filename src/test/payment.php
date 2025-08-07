@@ -10,10 +10,15 @@ class PaymentManager
 {
     private $paymentService;
 
-    public function __construct($index = 0)
+    public function __construct($indexOrCredentials = 0)
     {
         $configManager = new ConfigManager();
-        $authCredentialData = $configManager->getConfig($index);
+
+        if (is_array($indexOrCredentials)) {
+            $authCredentialData = $configManager->getConfigWithCredentials($indexOrCredentials);
+        } else {
+            $authCredentialData = $configManager->getConfig($indexOrCredentials);
+        }
         $apiConfig = new ApiConfig($authCredentialData);
         $this->paymentService = new PaymentData($apiConfig);
     }

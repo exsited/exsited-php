@@ -37,6 +37,8 @@ class AutoBillApiDataResolver
                 "appUrl"=>$authCredentialData->getAppUrl(),
                 "ClientId"=>$authCredentialData->getClientId(),
                 "ClientSecret"=>$authCredentialData->getClientSecret(),
+                "accessToken"=>$authCredentialData->getAccessToken(),
+                "refreshToken"=>$authCredentialData->getRefreshToken(),
                 "file_path" =>$authCredentialData->getFilePath()
             ];
         }

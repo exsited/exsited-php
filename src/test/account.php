@@ -9,10 +9,16 @@ class AccountManager
 {
     private $accountService;
 
-    public function __construct($index = 0)
+    public function __construct($indexOrCredentials = 0)
     {
         $configManager = new ConfigManager();
-        $authCredentialData = $configManager->getConfig($index);
+
+        if (is_array($indexOrCredentials)) {
+            $authCredentialData = $configManager->getConfigWithCredentials($indexOrCredentials);
+        } else {
+            $authCredentialData = $configManager->getConfig($indexOrCredentials);
+        }
+
         $apiConfig = new ApiConfig($authCredentialData);
         $this->accountService = new AccountData($apiConfig);
     }
@@ -698,7 +704,20 @@ class AccountManager
 
 
 //    Test Function Call here
-    $accountManager = new AccountManager(2);
+
+$credentials = [
+    'apiUrl' => '',
+    'appUrl' => null,
+    'client_id' => '',
+    'client_secret' => '',
+    'access_token' => '',
+    'refresh_token' => '',
+    'redirect_uri' => '',
+    'authTokenRenewCallback' => function ($authCredentialData)  {
+
+    }
+];
+    $accountManager = new AccountManager($credentials);
     $accountManager->testReadAll();
 //    $accountManager2 = new AccountManager(1);
 //    $accountManager2->testReadAll();

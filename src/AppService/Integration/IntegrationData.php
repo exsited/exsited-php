@@ -253,7 +253,7 @@ class IntegrationData
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::delete, $attWithId, null,null, $apiVersion);
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::DELETE, $attWithId, null,null, $apiVersion);
 
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
@@ -431,4 +431,5 @@ class IntegrationData
             throw new AutoBillApiException($e->getMessage());
         }
     }
+
 }

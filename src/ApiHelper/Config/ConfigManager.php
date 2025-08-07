@@ -80,4 +80,33 @@ class ConfigManager
     {
         return $this->httpCommunicator->POST_JSON($apiUrl, $params);
     }
+
+
+    public function getConfigWithCredentials(array $credentials)
+    {
+        $requiredKeys = ['apiUrl', 'appUrl', 'client_id', 'client_secret', 'access_token', 'refresh_token', 'redirect_uri'];
+
+        foreach ($requiredKeys as $key) {
+            if (!array_key_exists($key, $credentials)) {
+                throw new \Exception("Missing required credential key: $key");
+            }
+        }
+
+
+        $authCredential = new AutoBillAuthCredentialData([
+            'apiUrl' => $credentials['apiUrl'],
+            'appUrl' => $credentials['appUrl'],
+            'client_id' => $credentials['client_id'],
+            'client_secret' => $credentials['client_secret'],
+            'access_token' => $credentials['access_token'],
+            'refresh_token' => $credentials['refresh_token'],
+            'redirect_uri' => $credentials['redirect_uri'],
+            'file_path' => null,
+            'authTokenRenewCallback' => $credentials['authTokenRenewCallback']
+        ]);
+
+        return $authCredential;
+    }
+
+
 }

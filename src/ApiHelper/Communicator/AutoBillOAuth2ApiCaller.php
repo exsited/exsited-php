@@ -149,7 +149,7 @@ class AutoBillOAuth2ApiCaller
                     $requestResponse->message = $message;
                     $response = $requestResponse;
                 }else{
-                    $requestResponse->message = "Network Error";
+                    $requestResponse->message = "Network Error".$apiResponse['response'];
                     $response = $requestResponse;
                 }
                 throw new AutoBillApiException(json_encode($response));
@@ -190,7 +190,7 @@ class AutoBillOAuth2ApiCaller
                         }
                         $requestResponse->error = $isErrors[0];
                     } else {
-                        $requestResponse->message = "Network Error";
+                        $requestResponse->message = "Network Error".$apiResponse['response'];
                     }
                     return $requestResponse;
                 } else {
