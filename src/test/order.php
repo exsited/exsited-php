@@ -26,7 +26,8 @@ class OrderManager
     public function testReadAll()
     {
         try {
-            $response = $this->orderService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->orderService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -931,7 +932,7 @@ class OrderManager
 
 
 $orderManager = new OrderManager();
-//    $orderManager->testReadAll();
+    $orderManager->testReadAll();
 //    $orderManager->testCreateOrderUsages();
 //    $orderManager->testReadInformation();
 //    $orderManager->testChangeInformation();
@@ -960,5 +961,5 @@ $orderManager = new OrderManager();
 //    $orderManager->testPreOrderRelinquish();
 //    $orderManager->testChangePreview();
 //    $orderManager->testContractAdjustmentPreview();
-    $orderManager->testContractAdjustment();
+//    $orderManager->testContractAdjustment();
 
