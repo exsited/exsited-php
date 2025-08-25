@@ -482,6 +482,30 @@ class IntegrationManager
         }
     }
 
+    public function testCreateSaveConnection()
+    {
+        $integrationUuid = "XERO";
+        try {
+            $response = $this->integrationService->createSaveConnection($integrationUuid,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testReadConnectionAccount()
+    {
+        $integrationUuid = "XERO";
+        try {
+            $response = $this->integrationService->readConnectionAccount($integrationUuid,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
+
 }
 
 $integrationManager = new IntegrationManager();
@@ -507,6 +531,7 @@ $integrationManager = new IntegrationManager();
 //$integrationManager->testReadConfiguration();
 //$integrationManager->testEnablePartnerDetails();
 //$integrationManager->testDisablePartnerDetails();
+$integrationManager->testCreateSaveConnection();
 
 
 
