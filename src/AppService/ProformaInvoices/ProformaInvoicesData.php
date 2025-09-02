@@ -20,11 +20,11 @@ Class ProformaInvoicesData
     }
 
 
-    public function readAllProformaInvoices($apiVersion = null){
+    public function readAllProformaInvoices($apiVersion = null, $queryParams = null){
         try{
             $requestBuilder= new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResource(ApiResource::PROFORMA_INVOICES, AutoBillApiSchemeHelper::GET,null,[],$apiVersion);
+            return $requestBuilder->callResource(ApiResource::PROFORMA_INVOICES, AutoBillApiSchemeHelper::GET,null,[],$apiVersion,$queryParams);
         } catch (AutoBillApiException $e){
             throw new AutoBillApiException($e->getMessage());
         }
@@ -42,7 +42,7 @@ Class ProformaInvoicesData
         }
 
 
-    public function createProformaInvoices($id, $params ,$apiVersion = null)
+    public function createProformaInvoicesPayment($id, $params , $apiVersion = null)
     {
         try {
             $requestBuilder= new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());

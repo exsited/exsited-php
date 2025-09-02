@@ -38,7 +38,7 @@ class OrderManager
     {
         $id = 'ORD-76GOU2-1261';
         try {
-            $response = $this->orderService->readDetails($id,'v3');
+            $response = $this->orderService->readDetails($id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -49,27 +49,29 @@ class OrderManager
     {
         $id = 'ORD-76GOU2-1261';
         try {
-            $response = $this->orderService->readInformation($id,'v3');
+            $response = $this->orderService->readInformation($id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
+
     public function testReadAccountOrders()
     {
         $accountID = '76GOU2';
         try {
-            $response = $this->orderService->readAccountOrders($accountID,'v3');
+            $response = $this->orderService->readAccountOrders($accountID, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
+
     public function testReadBillingPreferences()
     {
         $accountID = '76GOU2';
         try {
-            $response = $this->orderService->readBillingPreferences($accountID,'v3');
+            $response = $this->orderService->readBillingPreferences($accountID, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -80,7 +82,7 @@ class OrderManager
     {
         $id = 'ORD-76GOU2-1265';
         try {
-            $orderInfo = $this->orderService->readOrderLines($id,'v3');
+            $orderInfo = $this->orderService->readOrderLines($id, 'v3');
             echo '<pre>' . json_encode($orderInfo, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -90,15 +92,14 @@ class OrderManager
     public function testReadDetailsOrderLine()
     {
         $id = 'ORD-76GOU2-1265';
-        $chargeItemUUID="b2b4e5ba-b5d4-41da-81b7-a8d307cb80a1";
+        $chargeItemUUID = "b2b4e5ba-b5d4-41da-81b7-a8d307cb80a1";
         try {
-            $orderInfo = $this->orderService->readDetailsOrderLine($id,$chargeItemUUID,'v3');
+            $orderInfo = $this->orderService->readDetailsOrderLine($id, $chargeItemUUID, 'v3');
             echo '<pre>' . json_encode($orderInfo, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
-
 
 
     public function testCreate()
@@ -120,7 +121,7 @@ class OrderManager
         ];
 
         try {
-            $response = $this->orderService->create($params,'v3');
+            $response = $this->orderService->create($params, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -177,7 +178,7 @@ class OrderManager
         ];
 
         try {
-            $response = $this->orderService->createOrderWithPurchase($params,'v3');
+            $response = $this->orderService->createOrderWithPurchase($params, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -191,14 +192,15 @@ class OrderManager
                 "effective_date" => "2024-12-18"
             ]
         ];
-        $id='ORD-IE1DSN-1262';
+        $id = 'ORD-IE1DSN-1262';
         try {
-            $response = $this->orderService->cancel($params,$id,'v3');
+            $response = $this->orderService->cancel($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
+
     public function testChangeInformation()
     {
         $params = [
@@ -229,9 +231,9 @@ class OrderManager
 //                ]
             ]
         ];
-        $id='ORD-IE1DSN-1262';
+        $id = 'ORD-IE1DSN-1262';
         try {
-            $response= $this->orderService->changeInformation($params,$id,'v3');
+            $response = $this->orderService->changeInformation($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -257,9 +259,9 @@ class OrderManager
                 ]
             ]
         ];
-        $id='ORD-76GOU2-1265';
+        $id = 'ORD-76GOU2-1265';
         try {
-            $response = $this->orderService->changeBillingPreferences($params,$id,'v3');
+            $response = $this->orderService->changeBillingPreferences($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -285,15 +287,16 @@ class OrderManager
                 ]
             ]
         ];
-        $id='ORD-76GOU2-1265';
+        $id = 'ORD-76GOU2-1265';
 
         try {
-            $response = $this->orderService->updateBillingPreferences($params,$id,'v3');
+            $response = $this->orderService->updateBillingPreferences($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
+
     public function testChangeOrderLineInformation()
     {
         $params = [
@@ -311,11 +314,11 @@ class OrderManager
                 ]
             ]
         ];
-        $id='ORD-76GOU2-1265';
-        $chargeItemUUID="b2b4e5ba-b5d4-41da-81b7-a8d307cb80a1";
+        $id = 'ORD-76GOU2-1265';
+        $chargeItemUUID = "b2b4e5ba-b5d4-41da-81b7-a8d307cb80a1";
 
         try {
-            $response = $this->orderService->changeOrderLineInformation($params, $id,$chargeItemUUID,'v3');
+            $response = $this->orderService->changeOrderLineInformation($params, $id, $chargeItemUUID, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -324,7 +327,7 @@ class OrderManager
 
     public function testOrderDelete()
     {
-        $id='ORD-Y1B8-000-0133';
+        $id = 'ORD-Y1B8-000-0133';
         try {
             $response = $this->orderService->delete($id);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
@@ -332,7 +335,6 @@ class OrderManager
             echo 'Error: ' . $e->getMessage();
         }
     }
-
 
 
     public function testCreateOrderUsages()
@@ -365,14 +367,15 @@ class OrderManager
                 "effective_date" => "2024-12-18"
             ]
         ];
-        $id='ORD-IE1DSN-1262';
+        $id = 'ORD-IE1DSN-1262';
         try {
-            $response = $this->orderService->reactivate($params,$id,'v3');
+            $response = $this->orderService->reactivate($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
+
     public function testChange()
     {
         $params = [
@@ -395,9 +398,9 @@ class OrderManager
                 ]
             ]
         ];
-        $id='ORD-76GOU2-1265';
+        $id = 'ORD-76GOU2-1265';
         try {
-            $response = $this->orderService->change($params,$id,'v3');
+            $response = $this->orderService->change($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -501,7 +504,7 @@ class OrderManager
         ];
 
         try {
-            $response = $this->orderService->downgrade($id,$params);
+            $response = $this->orderService->downgrade($id, $params);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -510,47 +513,28 @@ class OrderManager
 
     public function testUpgrade()
     {
-        $id = "ORD-76GOU2-1267";
+        $id = "ORD-3ZMDES-6388";
         $params = [
-            "effective_date" => "2024-11-14",
-            "effective_immediately" => true,
-//            "redemption_code" => "89369323",
-//            "discount_percentage" => "10",
-            "billing_period"=> "1 Month",
-            "note"=> "Upgrade",
+            "effective_date" => "2025-09-02",
+            "properties" => [
+                "billing_period" => "1 Month",
+                "proforma_properties" => [
+                    "acceptance_required" => true,
+                    "payment_required" => true,
+                    "acceptance_term" => "1 Month",
+                    "acceptance_date" => "ProFormaInvoicePaymentDate", // Could be dynamic
+                    "terms_and_conditions" => "By accepting this pro-forma, you agree to the updated pricing and service terms effective from 29 April 2025."
+                ]
+            ],
             "lines" => [
                 [
-//                    "item_id" => "ITEM-0027",
-//                    "item_name" => "recuring family item",
-                    "charge_item_uuid"=> "e62b6cc0-24d4-45e7-bede-5db17d3f7bb8",
-                    "package_name" => "standard package",
-                    "quantity" => "10",
+                    "charge_item_uuid" => "c49317e3-4e72-48fb-bbe2-27dc864541ab",
+                    "item_uuid" => "e5fecdcf-779f-4234-bb47-d70378a42d7e",
+                    "package_name" => "Pack-2",
+                    "item_quantity" => "1",
                     "item_price_snapshot" => [
                         "pricing_rule" => [
-                            "price" => "10.000000"
-                        ]
-                    ],
-                    "discount" => "9.99",
-                    "shipping_cost" => "2.50",
-                    "uom" => "kilogram",
-                    "warehouse" => "warehouse1",
-                    "is_tax_exempt_when_sold" => "false",
-                    "item_price_tax" => [
-                        "uuid" => "d166b28c-395b-4692-87b9-7408a01b72c0",
-                        "code" => "GST",
-                        "rate" => "10.000000"
-                    ],
-                    "accounting_code" => "Sales Revenue",
-                    "item_invoice_note" => "this is an invoice note",
-                    "item_description" => "One hot day, a thirsty crow flew all over the fields looking for water. For a long time, he could not find any.",
-                    "item_custom_attributes" => [
-                        [
-                            "name" => "cus_attr_number",
-                            "value" => ""
-                        ],
-                        [
-                            "name" => "cus_attr_string",
-                            "value" => ""
+                            "price" => "200"
                         ]
                     ]
                 ]
@@ -559,7 +543,7 @@ class OrderManager
 
 
         try {
-            $response = $this->orderService->upgrade($id,$params);
+            $response = $this->orderService->upgrade($id, $params);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -574,13 +558,13 @@ class OrderManager
             "effective_immediately" => true,
 //            "redemption_code" => "89369323",
 //            "discount_percentage" => "10",
-            "billing_period"=> "1 Month",
-            "note"=> "Upgrade",
+            "billing_period" => "1 Month",
+            "note" => "Upgrade",
             "lines" => [
                 [
 //                    "item_id" => "ITEM-0027",
 //                    "item_name" => "recuring family item",
-                    "charge_item_uuid"=> "e62b6cc0-24d4-45e7-bede-5db17d3f7bb8",
+                    "charge_item_uuid" => "e62b6cc0-24d4-45e7-bede-5db17d3f7bb8",
                     "package_name" => "standard package",
                     "quantity" => "10",
                     "item_price_snapshot" => [
@@ -616,7 +600,7 @@ class OrderManager
         ];
 
         try {
-            $response = $this->orderService->upgradePreview($id,$params);
+            $response = $this->orderService->upgradePreview($id, $params);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -669,7 +653,7 @@ class OrderManager
         ];
 
         try {
-            $response = $this->orderService->downgradePreview($id,$params);
+            $response = $this->orderService->downgradePreview($id, $params);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -716,7 +700,7 @@ class OrderManager
         ];
 
         try {
-            $response = $this->orderService->createExpress($params,'v3');
+            $response = $this->orderService->createExpress($params, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -731,9 +715,9 @@ class OrderManager
             ]
         ];
 
-        $id='ORD-76GOU2-1273';
+        $id = 'ORD-76GOU2-1273';
         try {
-            $response= $this->orderService->changePaymentMethod($params,$id,'v3');
+            $response = $this->orderService->changePaymentMethod($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -762,6 +746,7 @@ class OrderManager
             echo 'Error: ' . $e->getMessage();
         }
     }
+
     public function testPreOrderRelinquish()
     {
         $params = [
@@ -772,7 +757,7 @@ class OrderManager
         $id = 'ORD-76GOU2-1272';
 
         try {
-            $response = $this->orderService->preOrderRelinquish($params,$id,'v3');
+            $response = $this->orderService->preOrderRelinquish($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -783,7 +768,7 @@ class OrderManager
     {
         $id = "ORD-76GOU2-1271";
         try {
-            $response = $this->orderService->delete($id,'v3');
+            $response = $this->orderService->delete($id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -812,9 +797,9 @@ class OrderManager
                 ]
             ]
         ];
-        $id='ORD-IE1DSN-1276';
+        $id = 'ORD-IE1DSN-1276';
         try {
-            $response = $this->orderService->changePreview($params, $id,'v3');
+            $response = $this->orderService->changePreview($params, $id, 'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -829,8 +814,8 @@ class OrderManager
             "effective_immediately" => true,
             "lines" => [
                 [
-                    "item_uuid"=> "963411ff-3387-4730-9c07-a3466b17dc4e",
-                    "charge_item_uuid"=> "b926b462-4c8d-4353-9d42-dcba4b4f76d7",
+                    "item_uuid" => "963411ff-3387-4730-9c07-a3466b17dc4e",
+                    "charge_item_uuid" => "b926b462-4c8d-4353-9d42-dcba4b4f76d7",
                     "package_name" => "standard package",
                     "quantity" => "10",
                     "item_price_snapshot" => [
@@ -866,7 +851,7 @@ class OrderManager
         ];
 
         try {
-            $response = $this->orderService->contractAdjustmentPreview($id,$params);
+            $response = $this->orderService->contractAdjustmentPreview($id, $params);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -919,7 +904,7 @@ class OrderManager
         ];
 
         try {
-            $response = $this->orderService->contractAdjustment($id,$params);
+            $response = $this->orderService->contractAdjustment($id, $params);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -927,12 +912,11 @@ class OrderManager
     }
 
 
-
     public function testCreateOrderAccept()
     {
-        $id = "ORD-76GOU2-1288";
+        $id = "ORD-3ZMDES-6388";
         try {
-            $response = $this->orderService->createOrderAccept($id,'v2');
+            $response = $this->orderService->createOrderAccept($id, 'v2');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
