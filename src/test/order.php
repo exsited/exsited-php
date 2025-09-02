@@ -873,6 +873,7 @@ class OrderManager
         }
     }
 
+
     public function testContractAdjustment()
     {
         $id = "ORD-IG6S6H-0053";
@@ -927,12 +928,22 @@ class OrderManager
 
 
 
+    public function testCreateOrderAccept()
+    {
+        $id = "ORD-76GOU2-1288";
+        try {
+            $response = $this->orderService->createOrderAccept($id,'v2');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
 }
 
 
-$orderManager = new OrderManager();
-    $orderManager->testReadAll();
+$orderManager = new OrderManager(1);
+//    $orderManager->testReadAll();
 //    $orderManager->testCreateOrderUsages();
 //    $orderManager->testReadInformation();
 //    $orderManager->testChangeInformation();
@@ -961,5 +972,5 @@ $orderManager = new OrderManager();
 //    $orderManager->testPreOrderRelinquish();
 //    $orderManager->testChangePreview();
 //    $orderManager->testContractAdjustmentPreview();
-//    $orderManager->testContractAdjustment();
+    $orderManager->testCreateOrderAccept();
 

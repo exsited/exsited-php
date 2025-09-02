@@ -290,27 +290,19 @@ class IntegrationData
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(
-                ApiResource::INTEGRATION,
-                AutoBillApiSchemeHelper::GET,
-                $integrationUuid,
-                null,
-                $attribute,
-                $apiVersion
-            );
-        }
-        catch (AutoBillApiException $e) {
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::GET, $integrationUuid, null, $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
     }
 
-    public function getIntegrationCurrencies($integrationUuid, $apiVersion = null)
+    public function getIntegrationCurrencies($integrationUuid, $apiVersion = null, $queryParams = null)
     {
-        $attribute = "integration/$integrationUuid/currency";
+        $attribute = "currency";
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::GET, $integrationUuid, null, $attribute, $apiVersion);
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::GET, $integrationUuid, null, $attribute, $apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -345,14 +337,7 @@ class IntegrationData
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion     = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(
-                ApiResource::INTEGRATION,
-                AutoBillApiSchemeHelper::POST,
-                $integrationUuid,
-                null,
-                'sync-currencies',
-                $apiVersion
-            );
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, null, 'sync-currencies', $apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -363,14 +348,7 @@ class IntegrationData
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion     = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(
-                ApiResource::INTEGRATION,
-                AutoBillApiSchemeHelper::POST,
-                $integrationUuid,
-                null,
-                'sync-accounting-codes',
-                $apiVersion
-            );
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, null, 'sync-accounting-codes', $apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -381,14 +359,7 @@ class IntegrationData
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion     = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(
-                ApiResource::INTEGRATION,
-                AutoBillApiSchemeHelper::POST,
-                $integrationUuid,
-                null,
-                'sync-taxes',
-                $apiVersion
-            );
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, null, 'sync-taxes', $apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -400,14 +371,7 @@ class IntegrationData
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(
-                ApiResource::INTEGRATION,
-                AutoBillApiSchemeHelper::POST,
-                $integrationUuid,
-                $params,
-                $attribute,
-                $apiVersion
-            );
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, $params, $attribute, $apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -419,14 +383,7 @@ class IntegrationData
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(
-                ApiResource::INTEGRATION,
-                AutoBillApiSchemeHelper::POST,
-                $integrationUuid,
-                $params,
-                $attribute,
-                $apiVersion
-            );
+            return $requestBuilder->callResourceAttribute(ApiResource::INTEGRATION, AutoBillApiSchemeHelper::POST, $integrationUuid, $params, $attribute, $apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -457,6 +414,5 @@ class IntegrationData
             throw new AutoBillApiException($e->getMessage());
         }
     }
-
 
 }

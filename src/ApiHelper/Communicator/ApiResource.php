@@ -28,6 +28,7 @@ class ApiResource
     const CREDIT_NOTE = "credit-notes";
     const CREDIT_NOTE_APPLICATIONS = "credit-note-applications";
     const COMPONENT = "component";
+    const PROFORMA_INVOICES = "proforma-invoices";
     const PURCHASE_REFUND = "purchase-refunds";
     const PURCHASE_CREDIT_NOTE_APPLICATIONS = "purchase-credit-note-applications";
     const PURCHASE_CREDIT_NOTE = "purchase-credit-notes";

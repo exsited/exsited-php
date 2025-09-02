@@ -132,8 +132,8 @@ class AutoBillRequestBuilder
             }
         }
 
-        if ($queryParams != null) {
-            $path = $path . '/' . $queryParams;
+        if ($queryParams != null && is_array($queryParams)) {
+            $path .= '?' . http_build_query($queryParams);
         }
 
         try {

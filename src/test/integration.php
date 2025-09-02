@@ -504,7 +504,162 @@ class IntegrationManager
         }
     }
 
+    public function testPartnerFunctionDisable()
+    {
+        $integrationUuid = '18f71454-7116-4687-a8b6-8c28503ba9cc';
+        $partnerFunctionUuid = '0358ecce-aa9c-4778-9a12-a3ee577a3b61';
+        try {
+            $response = $this->integrationService->partnerFunctionDisable($integrationUuid, $partnerFunctionUuid, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
+    public function testPartnerFunctionEnable()
+    {
+        $integrationUuid = '18f71454-7116-4687-a8b6-8c28503ba9cc';
+        $partnerFunctionUuid = '0358ecce-aa9c-4778-9a12-a3ee577a3b61';
+        try {
+            $response = $this->integrationService->partnerFunctionEnable($integrationUuid, $partnerFunctionUuid, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testReadIntegrationConfiguration()
+    {
+        $integrationUuid = '25a9ddef-86cc-4e6d-b449-3027ba3115fc';
+        try {
+            $response = $this->integrationService->readIntegrationConfiguration($integrationUuid,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testLinkItems()
+    {
+        $integrationUuid = '297c212e-1fee-4e72-a25d-8d3b19eec3de';
+        $params = [
+            "integration" => [
+                "item_mapping" => [
+                    [
+                        "remote_object_id" => "276e4157-4bd1-4cac-9b28-2f409a21ee97",
+                        "exsited_object_uuid" => "68f4f6a7-8097-49c7-a78e-e420313081f9"
+                    ],
+                    [
+                        "remote_object_id" => "631d6193-a094-4832-8153-d15db494fa9f",
+                        "exsited_object_uuid" => "bd986c11-2213-4152-8028-a49afc30f780"
+                    ]
+                ]
+            ]
+        ];
+        try {
+            $response = $this->integrationService->linkItems($integrationUuid, $params,  'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testUnlinkItems()
+    {
+        $integrationUuid = '297c212e-1fee-4e72-a25d-8d3b19eec3de';
+        $params = [
+            "integration" => [
+                "item_mapping" => [
+                    [
+                        "remote_object_id" => "276e4157-4bd1-4cac-9b28-2f409a21ee97",
+                        "exsited_object_uuid" => "68f4f6a7-8097-49c7-a78e-e420313081f9"
+                    ],
+                    [
+                        "remote_object_id" => "631d6193-a094-4832-8153-d15db494fa9f",
+                        "exsited_object_uuid" => "bd986c11-2213-4152-8028-a49afc30f780"
+                    ]
+                ]
+            ]
+        ];
+        try {
+            $response = $this->integrationService->unlinkItems($integrationUuid, $params,  'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testgetIntegrationCurrencies()
+    {
+        $integrationUuid = '25a9ddef-86cc-4e6d-b449-3027ba3115fc';
+        try {
+            $queryParams = [
+                'limit' => 10,
+                'records' => 5,
+            ];
+            $response = $this->integrationService->getIntegrationCurrencies($integrationUuid,'v3', $queryParams);
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testDisableIntegrationCurrency()
+    {
+        $integrationUuid = '25a9ddef-86cc-4e6d-b449-3027ba3115fc';
+        $currencyName = 'AUD';
+        try {
+            $response = $this->integrationService->disableIntegrationCurrency($integrationUuid, $currencyName, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testEnableIntegrationCurrency()
+    {
+        $integrationUuid = '25a9ddef-86cc-4e6d-b449-3027ba3115fc';
+        $currencyName = 'AUD';
+        try {
+            $response = $this->integrationService->enableIntegrationCurrency($integrationUuid, $currencyName, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testSyncCurrencies()
+    {
+        $integrationUuid = '25a9ddef-86cc-4e6d-b449-3027ba3115fc';
+        try {
+            $response = $this->integrationService->syncCurrencies($integrationUuid, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testSyncAccountingCodes()
+    {
+        $integrationUuid = '25a9ddef-86cc-4e6d-b449-3027ba3115fc';
+        try {
+            $response = $this->integrationService->syncAccountingCodes($integrationUuid, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testSyncTaxes()
+    {
+        $integrationUuid = '25a9ddef-86cc-4e6d-b449-3027ba3115fc';
+        try {
+            $response = $this->integrationService->syncTaxes($integrationUuid, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
 }
 
@@ -528,11 +683,19 @@ $integrationManager = new IntegrationManager();
 //$integrationManager->testAddAutomation();
 //$integrationManager->testUpdateAutomation();
 //$integrationManager->testDeleteAutomation();
-//$integrationManager->testReadConfiguration();
-//$integrationManager->testEnablePartnerDetails();
-//$integrationManager->testDisablePartnerDetails();
-$integrationManager->testCreateSaveConnection();
-
+//$integrationManager->testCreateSaveConnection();
+//$integrationManager->testReadConnectionAccount();
+//$integrationManager->testPartnerFunctionDisable();
+//$integrationManager->testPartnerFunctionEnable();
+//$integrationManager->testReadIntegrationConfiguration();
+//$integrationManager->testLinkItems();
+//$integrationManager->testUnlinkItems();
+//$integrationManager->testgetIntegrationCurrencies();
+//$integrationManager->testDisableIntegrationCurrency();
+//$integrationManager->testEnableIntegrationCurrency();
+//$integrationManager->testSyncCurrencies();
+//$integrationManager->testSyncAccountingCodes();
+$integrationManager->testSyncTaxes();
 
 
 

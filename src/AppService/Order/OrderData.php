@@ -358,6 +358,19 @@ class OrderData
         }
     }
 
+    public function createOrderAccept($id,$apiVersion = null)
+    {
+        $attribute = "accept";
+
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::ORDER, AutoBillApiSchemeHelper::POST,$id,null,$attribute,$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
     public function contractAdjustment($id,$params,$apiVersion = null)
     {
         $attribute = "contract-adjustment";
