@@ -40,6 +40,17 @@ class OrderData
         }
     }
 
+    public function getBulkOrderDetails($bulk_id,$request_id,$apiVersion = null){
+        try {
+            $attribute="$request_id";
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::BULK_RESULT, AutoBillApiSchemeHelper::GET, $bulk_id,[],$attribute,$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
     public function readOrderLines($id,$apiVersion = null){
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());

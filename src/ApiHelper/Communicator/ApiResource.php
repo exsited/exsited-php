@@ -9,6 +9,7 @@ class ApiResource
     
     const ACCOUNT = "accounts";
     const ORDER = "orders";
+    const BULK_RESULT = "bulk_result";
     const EXPRESS = "express";
     const PURCHASE_ORDER = "purchase-orders";
     const INVOICE = "invoices";
