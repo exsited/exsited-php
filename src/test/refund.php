@@ -77,12 +77,47 @@ class refundManager
         }
     }
 
+    public function testUpdate()
+    {
+        $id = 'REF-91685347';
+        $params = [
+            "refund" => [
+                "date" => "2024-12-24",
+                "amount" => "15.00",
+                "reference" => "REF-123-UPDATED",
+                "note" => "Updated refund note"
+            ]
+        ];
 
+        try {
+            $response = $this->refundService->update($id,$params,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testReadAllRefunds()
+    {
+        $queryParams = [
+            'records' => 2,
+            'limit' => 20,
+            'offset' => 0,
+        ];
+        try {
+            $response = $this->refundService->readAllRefunds('v3', $queryParams);
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
 }
 
-$refundManager = new refundManager();
+$refundManager = new refundManager(0);
 //$refundManager->testReadDetails();
 //$refundManager->testCreate();
 //$refundManager->testReadAccountRefunds();
-$refundManager->testDelete();
+//$refundManager->testDelete();
+//$refundManager->testUpdate();
+$refundManager->testReadAllRefunds();

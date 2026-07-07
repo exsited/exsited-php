@@ -103,6 +103,16 @@ class OrderData
         }
     }
 
+    public function readLabourOrders($labourID,$apiVersion = null){
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::LABOURS, AutoBillApiSchemeHelper::GET, $labourID,[],"orders",$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
     public function changeInformation($params, $id,$apiVersion = null){
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
@@ -390,6 +400,43 @@ class OrderData
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
             return $requestBuilder->callResourceAttribute(ApiResource::ORDER, AutoBillApiSchemeHelper::POST,$id,$params,$attribute,$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function orderPdf($id, $apiVersion = null, $format = 'binary')
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? 'v2';
+            return $requestBuilder->callResourceRaw(ApiResource::ORDER, $id, 'pdf', $apiVersion, [], $format);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function changeStatus($params, $id, $apiVersion = null)
+    {
+        $json = json_encode($params);
+        $json = "{ \"order\": " . $json . " }";
+        $json = json_decode($json);
+
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? 'v2';
+            return $requestBuilder->callResourceAttribute(ApiResource::ORDER, AutoBillApiSchemeHelper::POST, $id, $json, 'change_status', $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function convertToOrder($id, $apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? 'v2';
+            return $requestBuilder->callResourceAttribute(ApiResource::ORDER, AutoBillApiSchemeHelper::POST, $id, null, 'convert_to_order', $apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }

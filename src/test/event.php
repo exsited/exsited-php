@@ -27,7 +27,8 @@ class EventManager
     public function testReadAll()
     {
         try {
-            $response = $this->eventService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->eventService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -60,6 +61,6 @@ class EventManager
 }
 
 $eventManager = new EventManager();
-//$eventManager->testReadAll();
+$eventManager->testReadAll();
 //$eventManager->testReadDetails();
- $eventManager->testRemove();
+// $eventManager->testRemove();

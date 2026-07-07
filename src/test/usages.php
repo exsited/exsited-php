@@ -25,7 +25,8 @@ class UsagesManager
 
     public function testReadAll(){
         try {
-            $response = $this->usagesService->readAll();
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->usagesService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -41,6 +42,26 @@ class UsagesManager
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+    public function testCreate(){
+        try {
+            $params = [
+                "usage" => [
+                    "account_id" => "IE1DSN",
+                    "item_id" => "ITEM-12345",
+                    "quantity" => "10",
+                    "start_time" => "2024-12-01 00:00:00",
+                    "end_time" => "2024-12-31 23:59:59"
+                ]
+            ];
+
+            $response = $this->usagesService->create($params,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
     public function testChange(){
         try {
             $uuId="ff7de081-81aa-41f8-91e8-ab93239e25d1";
@@ -90,8 +111,9 @@ class UsagesManager
 }
 
 $usagesManager = new UsagesManager();
-//$usagesManager->testReadAll();
+$usagesManager->testReadAll();
 //$usagesManager->testReadDetails();
+//$usagesManager->testCreate();
 //$usagesManager->testChange();
 //$usagesManager->testUpdate();
 //$usagesManager->testDelete();

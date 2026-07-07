@@ -26,7 +26,8 @@ class ItemReceiptManager
     public function testReadAll()
     {
         try {
-            $response = $this->itemReceiptService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->itemReceiptService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -60,7 +61,7 @@ class ItemReceiptManager
 }
 
 $itemReceiptManager = new ItemReceiptManager();
-//$itemReceiptManager->testReadAll();
+$itemReceiptManager->testReadAll();
 //$itemReceiptManager->testReadDetails();
-$itemReceiptManager->testReadPurchaseOrderItemReceipt();
+//$itemReceiptManager->testReadPurchaseOrderItemReceipt();
 

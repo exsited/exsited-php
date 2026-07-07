@@ -117,6 +117,17 @@ class NotesData
         }
     }
 
+    public function readAllNotes($apiVersion = null, $queryParams = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResource(ApiResource::NOTES, AutoBillApiSchemeHelper::GET, '', [], $apiVersion, $queryParams);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
     public function readDetails($noteUuid,$apiVersion = null)
     {
         try {

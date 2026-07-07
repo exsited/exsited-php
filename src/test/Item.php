@@ -491,7 +491,118 @@ class ItemManager
         }
     }
 
+    public function testReadFamilyDetails()
+    {
+        $id = "ITEM-15XZ";
+        try {
+            $response = $this->itemService->readFamilyDetails($id, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
+    public function testReadPackageDetails()
+    {
+        $id = "ITEM-15XZ";
+        $uuid = "d78dc6e5-c2fd-49b4-8758-01b85bde2fed";
+        try {
+            $response = $this->itemService->readPackageDetails($id, $uuid, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testUpdateFamilyDetails()
+    {
+        $id = "ITEM-15XZ";
+        $params = [
+            "items" => [
+                "family_details" => [
+                    "add" => ["ITEM-0124"],
+                    "remove" => ["ITEM-0133"]
+                ]
+            ]
+        ];
+        try {
+            $response = $this->itemService->updateFamilyDetails($id, $params, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testCreatePackageDetails()
+    {
+        $id = "ITEM-15XZ";
+        $params = [
+            "items" => [
+                "package_details" => [
+                    "name" => "Ispat 1124",
+                    "rank" => 5001124,
+                    "rate_list" => [
+                        ["id" => "ITEM-0130", "quantity" => "5", "uom" => "Square Centimetre"]
+                    ],
+                    "enable_billing_periods" => "true",
+                    "billing_periods" => [
+                        ["name" => "1 Day", "rank" => 10]
+                    ],
+                    "custom_attributes" => [
+                        ["name" => "CA_ITEM_PACKAGE", "value" => "555"]
+                    ]
+                ]
+            ]
+        ];
+        try {
+            $response = $this->itemService->createPackageDetails($id, $params, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testUpdatePackageDetails()
+    {
+        $id = "ITEM-15XZ";
+        $uuid = "d78dc6e5-c2fd-49b4-8758-01b85bde2fed";
+        $params = [
+            "items" => [
+                "package_details" => [
+                    "name" => "Ispat 1124",
+                    "rank" => 5001124,
+                    "rate_list" => [
+                        ["id" => "ITEM-0114", "quantity" => "15", "uom" => ""]
+                    ],
+                    "enable_billing_periods" => "true",
+                    "billing_periods" => [
+                        ["name" => "1 Day", "rank" => 10]
+                    ],
+                    "custom_attributes" => [
+                        ["name" => "CA_ITEM_PACKAGE", "value" => "1011"]
+                    ]
+                ]
+            ]
+        ];
+        try {
+            $response = $this->itemService->updatePackageDetails($id, $uuid, $params, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testDeletePackageDetails()
+    {
+        $id = "ITEM-15XZ";
+        $uuid = "caba656f-df7d-40da-9fea-00e935bd6d29";
+        try {
+            $response = $this->itemService->deletePackageDetails($id, $uuid, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
 }
 
@@ -513,3 +624,9 @@ class ItemManager
 //    $itemManager->testReadWarehouseInventory();
 //    $itemManager->testCreateInventory();
 //    $itemManager->testAddInventory();
+//    $itemManager->testReadFamilyDetails();
+//    $itemManager->testReadPackageDetails();
+//    $itemManager->testUpdateFamilyDetails();
+//    $itemManager->testCreatePackageDetails();
+//    $itemManager->testUpdatePackageDetails();
+//    $itemManager->testDeletePackageDetails();

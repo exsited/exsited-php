@@ -27,12 +27,12 @@ class GiftData
         }
     }
 
-    public function readAll($apiVersion = null)
+    public function readAll($apiVersion = null, $queryParams = null)
     {
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResource(ApiResource::GIFTCIRTIFICATE, AutoBillApiSchemeHelper::GET,null,[],$apiVersion);
+            return $requestBuilder->callResource(ApiResource::GIFTCIRTIFICATE, AutoBillApiSchemeHelper::GET,null,[],$apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -58,12 +58,12 @@ class GiftData
             throw new AutoBillApiException($e->getMessage());
         }
     }
-    public function readAllocations($uuId,$apiVersion = null)
+    public function readAllocations($uuId,$apiVersion = null, $queryParams = null)
     {
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(ApiResource::GIFTCIRTIFICATE, AutoBillApiSchemeHelper::GET,$uuId, [],'allocations',$apiVersion);
+            return $requestBuilder->callResourceAttribute(ApiResource::GIFTCIRTIFICATE, AutoBillApiSchemeHelper::GET,$uuId, [],'allocations',$apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }

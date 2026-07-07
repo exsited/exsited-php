@@ -20,12 +20,12 @@ class PaymentData
         $this->apiConfig = $apiConfig;
     }
 
-    public function readAll($apiVersion = null)
+    public function readAll($apiVersion = null, $queryParams = null)
     {
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResource(ApiResource::PAYMENTS, AutoBillApiSchemeHelper::GET,null,[],$apiVersion);
+            return $requestBuilder->callResource(ApiResource::PAYMENTS, AutoBillApiSchemeHelper::GET,null,[],$apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -81,6 +81,28 @@ class PaymentData
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
             return $requestBuilder->callResource(ApiResource::PAYMENTS, AutoBillApiSchemeHelper::DELETE,$id,[],$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function create($params,$apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResource(ApiResource::PAYMENTS, AutoBillApiSchemeHelper::POST,null,$params,$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function update($id,$params,$apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResource(ApiResource::PAYMENTS, AutoBillApiSchemeHelper::PATCH,$id,$params,$apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }

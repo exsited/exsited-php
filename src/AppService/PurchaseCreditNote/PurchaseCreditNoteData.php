@@ -31,12 +31,12 @@ class PurchaseCreditNoteData
         }
     }
 
-    public function readAllPurchaseCreditNoteApplications($apiVersion = null)
+    public function readAllPurchaseCreditNoteApplications($apiVersion = null, $queryParams = null)
     {
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResourceAttribute(ApiResource::PURCHASE_CREDIT_NOTE_APPLICATIONS, AutoBillApiSchemeHelper::GET,null,[],null,$apiVersion);
+            return $requestBuilder->callResourceAttribute(ApiResource::PURCHASE_CREDIT_NOTE_APPLICATIONS, AutoBillApiSchemeHelper::GET,null,[],null,$apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -64,5 +64,15 @@ class PurchaseCreditNoteData
         }
     }
 
+    public function readAllPurchaseCreditNote($apiVersion = null, $queryParams)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::PURCHASE_CREDIT_NOTE, AutoBillApiSchemeHelper::GET,null,[],null,$apiVersion, $queryParams);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
 
 }

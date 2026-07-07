@@ -25,7 +25,8 @@ class ItemFulfilmentManager
 
     public function testReadAll(){
         try {
-            $response = $this->itemFulfillmentService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->itemFulfillmentService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -92,6 +93,34 @@ class ItemFulfilmentManager
         }
     }
 
+    public function testUpdate()
+    {
+        $params = [
+            "item_fulfillment" => [
+                "date" => "2026-01-05",
+                "id" => "FF-20232656",
+                "tracking_number" => "TR-02506654",
+                "note" => "fulfillment_note",
+                "fulfillments" => [
+                    [
+                        "item_uuid" => "fb360044-0fcc-480b-90fb-086c346ef690",
+                        "fulfillment_quantity" => "8",
+                        "uuid" => "fa2c0cba-935e-4ac1-8f2b-a55aac42a74a"
+                    ]
+                ]
+            ]
+        ];
+
+        $id = "FF-20232656";
+
+        try {
+            $response = $this->itemFulfillmentService->update($params,$id,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 }
 
 $itemFulfillmentManager = new ItemFulfilmentManager();
@@ -100,3 +129,4 @@ $itemFulfillmentManager = new ItemFulfilmentManager();
 //$itemFulfillmentManager->testReadDetails();
 //$itemFulfillmentManager->testReadInvoiceItemFulfillment();
 //$itemFulfillmentManager->testReadInvoiceItemFulfillmentDetails();
+//$itemFulfillmentManager->testUpdate();

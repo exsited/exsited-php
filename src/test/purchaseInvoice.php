@@ -25,7 +25,8 @@ class PurchaseInvoiceManager
     }
     public function testReadAll(){
         try {
-            $response = $this->purchaseInvoiceService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->purchaseInvoiceService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -41,6 +42,7 @@ class PurchaseInvoiceManager
             echo 'Error: ' . $e->getMessage();
         }
     }
+
     public function testReadAccountPurchaseInvoices()
     {
         $accountId = '3YV4FY';
@@ -51,6 +53,18 @@ class PurchaseInvoiceManager
             echo 'Error: ' . $e->getMessage();
         }
     }
+    public function testCreatePurchaseOrderPurchaseInvoices()
+    {
+        $PurchaseOrderId = '3YV4FY';
+        $params = [];
+        try {
+            $response = $this->purchaseInvoiceService->createPurchaseOrderPurchaseInvoices($PurchaseOrderId,$params,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
     public function testReadLinesDetails()
     {
         $id = 'PI-3YV4FY-0001';
@@ -101,7 +115,7 @@ class PurchaseInvoiceManager
 
 }
 $purchaseInvoiceManager = new PurchaseInvoiceManager();
-//$purchaseInvoiceManager->testReadAll();
+$purchaseInvoiceManager->testReadAll();
 //$purchaseInvoiceManager->testReadDetails();
 //$purchaseInvoiceManager->testReadAccountPurchaseInvoices();
 //$purchaseInvoiceManager->testReadLinesDetails();
