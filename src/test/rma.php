@@ -26,7 +26,8 @@ class RmaManager
     public function testReadAll()
     {
         try {
-            $response = $this->rmaService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->rmaService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -132,7 +133,7 @@ class RmaManager
 
 
 $rmaManager= new RmaManager();
-//$rmaManager->testReadAll();
+$rmaManager->testReadAll();
 //$rmaManager->testReadDetails();
 //$rmaManager->testReadInvoiceRmaReceiveAll();
 //$rmaManager->testReadInvoiceAllRma();

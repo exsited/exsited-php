@@ -26,7 +26,8 @@ class PurchaseOrderManager
     public function testReadAll()
     {
         try {
-            $response = $this->purchaseOrderService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->purchaseOrderService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -192,7 +193,7 @@ class PurchaseOrderManager
 }
 
 $purchaseOrderManager = new PurchaseOrderManager();
-//$purchaseOrderManager->testReadAll();
+$purchaseOrderManager->testReadAll();
 //$purchaseOrderManager->testReadDetails();
 //$purchaseOrderManager->testCreate();
 //$purchaseOrderManager->testReadDetailsInformation();

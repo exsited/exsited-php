@@ -4,6 +4,7 @@ namespace Api\ApiHelper;
 use Api\ApiHelper\Communicator\ApiResource;
 use Api\ApiHelper\Communicator\Data\AutoBillAuthCredentialData;
 use Api\ApiHelper\Communicator\AutoBillApiDataResolver;
+use Api\ApiHelper\Communicator\AutoBillOAuth2ApiCaller;
 use Api\AppService\AutoBillApiException;
 
 class AutoBillRequestBuilder
@@ -203,6 +204,60 @@ class AutoBillRequestBuilder
         $path = "api/v1/" . $apiResource . '?filter=' . $apiResource . "/ca_product_attr_slug%20eq%20'{$attribute}'";
         try {
             return  $this->customRequest($path, $requestMethod);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function callResourceRaw($apiResource, $id = null, $attribute = null, $apiVersion = 'v2', $headers = [], $format = 'binary')
+    {
+        $path = "api/{$apiVersion}/{$apiResource}";
+
+        if ($id !== null) {
+            $path .= '/' . $id;
+            if ($attribute !== null) {
+                $path .= '/' . $attribute;
+            }
+        }
+
+        try {
+            $httpCommunication = new AutoBillOAuth2ApiCaller($this->authCredentialData);
+            $fullUrl = $this->authCredentialData->getApiUrl() . $path;
+
+            $defaultHeaders = ['Accept: application/pdf'];
+            if (!empty($headers)) {
+                $defaultHeaders = array_merge($defaultHeaders, $headers);
+            }
+
+            $response = $httpCommunication->GET_RAW($fullUrl, $defaultHeaders);
+            switch ($format) {
+                case 'hex':
+                    return bin2hex($response);
+                case 'base64':
+                    return base64_encode($response);
+                case 'binary':
+                default:
+                    return $response;
+            }
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function callResourceWithSubPath($apiResource, $requestMethod, $subPath = null, $params = null, $apiVersion = 'v3', $queryParams = null) {
+
+        $path = "api/{$apiVersion}/{$apiResource}";
+
+        if ($subPath !== null) {
+            $path .= '/' . $subPath;
+        }
+
+        if ($queryParams != null && is_array($queryParams)) {
+            $path .= '?' . http_build_query($queryParams);
+        }
+
+        try {
+            return $this->customRequest($path, $requestMethod, $params);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }

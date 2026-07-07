@@ -3,7 +3,10 @@ namespace Api\Component;
 
 use Api\ApiHelper\Communicator\Data\AutoBillAuthCredentialData;
 use Api\AppService\Account\AccountData;
+use Api\AppService\Approval\ApprovalData;
+use Api\AppService\Employee\EmployeeData;
 use Api\AppService\Product\ProductData;
+use Api\AppService\Task\TaskData;
 
 class ApiConfig
 {
@@ -25,6 +28,18 @@ class ApiConfig
 
     public function productData() {
         return new ProductData($this);
+    }
+
+    public function employeeData() {
+        return new EmployeeData($this);
+    }
+
+    public function approvalData() {
+        return new ApprovalData($this);
+    }
+
+    public function taskData() {
+        return new TaskData($this);
     }
 
 }

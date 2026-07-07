@@ -25,7 +25,7 @@ class PurchaseCreditNoteManager
 
     public function testRead()
     {
-        $id = "27517580";
+        $id = "18732099";
         try {
             $response = $this->purchaseCreditNoteService->read($id,'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
@@ -37,7 +37,8 @@ class PurchaseCreditNoteManager
     public function testReadAllPurchaseCreditNoteApplications()
     {
         try {
-            $response = $this->purchaseCreditNoteService->readAllPurchaseCreditNoteApplications('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->purchaseCreditNoteService->readAllPurchaseCreditNoteApplications('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -67,11 +68,27 @@ class PurchaseCreditNoteManager
         }
     }
 
+    public function testReadAllPurchaseCreditNote()
+    {
+        try {
+            $queryParams = [
+                'records' => 5,
+                'limit' => 10,
+                'offset' => 0,
+            ];
+            $response = $this->purchaseCreditNoteService->readAllPurchaseCreditNote('v3', $queryParams);
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 }
 
 $purchaseCreditNoteManager = new PurchaseCreditNoteManager();
 
-$purchaseCreditNoteManager->testRead();
+//$purchaseCreditNoteManager->testRead();
+$purchaseCreditNoteManager->testReadAllPurchaseCreditNote();
 //$purchaseCreditNoteManager->testReadAllPurchaseCreditNoteApplications();
 //$purchaseCreditNoteManager->testReadPurchaseCreditNoteApplicationsDetails();
 //$purchaseCreditNoteManager->testReadPurchaseInvoiceCreditNoteApplications();

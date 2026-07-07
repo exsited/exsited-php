@@ -37,7 +37,8 @@ class CreditNoteManager
     public function testReadAllCreditNoteApplications()
     {
         try {
-            $response = $this->creditNoteService->readAllCreditNoteApplications('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->creditNoteService->readAllCreditNoteApplications('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -67,10 +68,26 @@ class CreditNoteManager
         }
     }
 
+    public function testReadAllCreditNotes()
+    {
+        try {
+            $queryParams = [
+                'records' => 10,
+                'limit' => 15,
+                'offset' => 0,
+            ];
+            $response = $this->creditNoteService->readAllCreditNotes('v3', $queryParams);
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 }
 
 $creditNoteManager = new CreditNoteManager();
 //$creditNoteManager->testRead();
-//$creditNoteManager->testReadAllCreditNoteApplications();
+$creditNoteManager->testReadAllCreditNoteApplications();
 //$creditNoteManager->testReadCreditNoteApplicationsDetails();
 //$creditNoteManager->testReadInvoiceCreditNoteApplications();
+$creditNoteManager->testReadAllCreditNotes();

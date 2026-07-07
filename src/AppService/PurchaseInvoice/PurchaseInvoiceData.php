@@ -19,12 +19,12 @@ class PurchaseInvoiceData
         $this->apiConfig = $apiConfig;
     }
 
-    public function readAll($apiVersion = null)
+    public function readAll($apiVersion = null, $queryParams = null)
     {
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResource(ApiResource::PURCHASE_INVOICE, AutoBillApiSchemeHelper::GET,null,[],$apiVersion);
+            return $requestBuilder->callResource(ApiResource::PURCHASE_INVOICE, AutoBillApiSchemeHelper::GET,null,[],$apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -45,6 +45,16 @@ class PurchaseInvoiceData
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
             return $requestBuilder->callResourceAttribute(ApiResource::ACCOUNT, AutoBillApiSchemeHelper::GET, $accountId,[],'purchase-invoices',$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function createPurchaseOrderPurchaseInvoices($PurchaseOrderId,$params, $apiVersion = null){
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::PURCHASE_ORDER, AutoBillApiSchemeHelper::POST, $PurchaseOrderId,$params,'purchase-invoices',$apiVersion);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }

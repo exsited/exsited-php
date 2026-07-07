@@ -65,14 +65,26 @@ class ItemFulfillmentData
         }
     }
 
-    public function readAll($apiVersion = null)
+    public function readAll($apiVersion = null, $queryParams = null)
     {
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResource(ApiResource::ITEM_FULFILMENT, AutoBillApiSchemeHelper::GET,null,[],$apiVersion);
+            return $requestBuilder->callResource(ApiResource::ITEM_FULFILMENT, AutoBillApiSchemeHelper::GET,null,[],$apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
     }
+
+    public function update($id,$params,$apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResource(ApiResource::ITEM_FULFILMENT, AutoBillApiSchemeHelper::PATCH,$id,$params,$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
 }

@@ -25,7 +25,8 @@ class PaymentManager
 
    public function testReadAll(){
        try {
-           $payments = $this->paymentService->readAll('v3');
+           $queryParams = '?order_by=created_on&direction=desc&limit=2';
+           $payments = $this->paymentService->readAll('v3', $queryParams);
            echo '<pre>' . json_encode($payments, JSON_PRETTY_PRINT) . '</pre>';
        } catch (Exception $e) {
            echo 'Error: ' . $e->getMessage();
@@ -134,16 +135,71 @@ class PaymentManager
         }
     }
 
+    public function testCreate()
+    {
+        $params = [
+            "payment" => [
+                "date" => "2026-01-01",
+                "note" => "Payment for multiple invoices",
+                "payment_applied" => [
+                    [
+                        "processor" => "Bank Transfer",
+                        "amount" => "150.00",
+                        "reference" => "TXN-001"
+                    ]
+                ],
+                "invoices" => [
+                    [
+                        "invoice_id" => "INV-001",
+                        "amount" => "100.00"
+                    ],
+                    [
+                        "invoice_id" => "INV-002",
+                        "amount" => "50.00"
+                    ]
+                ]
+            ]
+        ];
+
+        try {
+            $response = $this->paymentService->create($params,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testUpdate()
+    {
+        $id = 'PMT-76GOU2-0001';
+        $params = [
+            "payment" => [
+                "date" => "2026-01-02",
+                "note" => "Updated payment note",
+                "reference" => "TXN-001-UPDATED"
+            ]
+        ];
+
+        try {
+            $response = $this->paymentService->update($id, $params,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 
 
 
 }
 
     $paymentManager= new PaymentManager();
-//    $paymentManager->testReadAll();
+    $paymentManager->testReadAll();
 //    $paymentManager->testReadDetails();
 //    $paymentManager->testReadAccountPaymentDetails();
 //    $paymentManager->testReadOrderPaymentDetails();
 //    $paymentManager->testReadInvoicePaymentDetails();
 //    $paymentManager->testCreateSinglePayment();
 //    $paymentManager->testDelete();
+//    $paymentManager->testCreate();
+//    $paymentManager->testUpdate();

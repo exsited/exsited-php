@@ -20,12 +20,12 @@ class UsagesData
         $this->apiConfig = $apiConfig;
     }
 
-    public function readAll($apiVersion = null)
+    public function readAll($apiVersion = null, $queryParams)
     {
         try {
             $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResource(ApiResource::USAGES, AutoBillApiSchemeHelper::GET,null,[],$apiVersion);
+            return $requestBuilder->callResource(ApiResource::USAGES, AutoBillApiSchemeHelper::GET,null,[],$apiVersion, $queryParams);
         } catch (AutoBillApiException $e) {
             throw new AutoBillApiException($e->getMessage());
         }
@@ -41,6 +41,18 @@ class UsagesData
             throw new AutoBillApiException($e->getMessage());
         }
     }
+
+    public function create($params,$apiVersion = null)
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResource(ApiResource::USAGES, AutoBillApiSchemeHelper::POST,null,$params,$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
     public function change($uuId,$params,$apiVersion = null)
     {
         try {

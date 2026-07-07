@@ -196,7 +196,7 @@ class ItemData
 
     public function addInventory($params, $id, $apiVersion = null)
     {
-        
+
         $attribute = "inventory/add";
 
         try {
@@ -208,6 +208,76 @@ class ItemData
         }
     }
 
+    public function readFamilyDetails($id, $apiVersion = null)
+    {
+        $attribute = "family-details";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::ITEM, AutoBillApiSchemeHelper::GET, $id, [], $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
 
+    public function readPackageDetails($id, $uuid, $apiVersion = null)
+    {
+        $attribute = "package-details/$uuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::ITEM, AutoBillApiSchemeHelper::GET, $id, [], $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function updateFamilyDetails($id, $params, $apiVersion = null)
+    {
+        $attribute = "family-details";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::ITEM, AutoBillApiSchemeHelper::POST, $id, $params, $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function createPackageDetails($id, $params, $apiVersion = null)
+    {
+        $attribute = "package-details";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::ITEM, AutoBillApiSchemeHelper::POST, $id, $params, $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function updatePackageDetails($id, $uuid, $params, $apiVersion = null)
+    {
+        $attribute = "package-details/$uuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::ITEM, AutoBillApiSchemeHelper::PATCH, $id, $params, $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function deletePackageDetails($id, $uuid, $apiVersion = null)
+    {
+        $attribute = "package-details/$uuid";
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::ITEM, AutoBillApiSchemeHelper::DELETE, $id, [], $attribute, $apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
 
 }

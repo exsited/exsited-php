@@ -58,4 +58,24 @@ class RefundData
         }
     }
 
+    public function update($id,$params,$apiVersion = null){
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResource(ApiResource::REFUND, AutoBillApiSchemeHelper::PATCH, $id,$params,$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function readAllRefunds($apiVersion = null, $queryParams){
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::REFUND, AutoBillApiSchemeHelper::GET, null,[],null,$apiVersion, $queryParams);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
 }

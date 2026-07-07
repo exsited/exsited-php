@@ -24,7 +24,8 @@ class InvoiceManager
     public function testReadAll()
     {
         try {
-            $response = $this->invoiceService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->invoiceService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -84,8 +85,13 @@ class InvoiceManager
 
     public function testReadAccountInvoices()
     {
-        $accountId='76GOU2';
-        $queryParams = '?order_by=created_on&direction=desc&limit=2';
+        $accountId='Q23QW1';
+        $queryParams = [
+            'records' => 10,
+            'limit' => 15,
+            'offset' => 0,
+        ]; //'?order_by=created_on&direction=desc&limit=2';
+
         try {
             $response = $this->invoiceService->readAccountInvoices($accountId,[],'v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
@@ -163,8 +169,95 @@ class InvoiceManager
         }
     }
 
+    public function testInvoicePdf()
+    {
+        $invoiceId = "INV-U894RZ-0161";
 
+        try {
+            // Binary format
+            echo "<h3>Test 1: Binary Format</h3>";
+            $pdfBinary = $this->invoiceService->invoicePdf($invoiceId, null, 'binary');
 
+            if (is_string($pdfBinary)) {
+                $pdfPath = "C:/Users/mehedi/Documents/{$invoiceId}.pdf";
+                file_put_contents($pdfPath, $pdfBinary);
+                echo "✓ PDF saved successfully at: {$pdfPath}<br>";
+                echo "✓ File size: " . strlen($pdfBinary) . " bytes<br>";
+                exec("start {$pdfPath}");
+            }
+
+            echo "<hr>";
+
+            // Small delay to avoid rate limiting
+            sleep(1);
+
+            // Hexadecimal format
+            echo "<h3>Test 2: Hex Format</h3>";
+            $pdfHex = $this->invoiceService->invoicePdf($invoiceId, null, 'hex');
+
+            if (is_string($pdfHex)) {
+                $hexPath = "C:/Users/mehedi/Documents/{$invoiceId}.hex";
+                file_put_contents($hexPath, $pdfHex);
+                echo "✓ Hex file saved successfully at: {$hexPath}<br>";
+                echo "✓ Hex string length: " . strlen($pdfHex) . " characters<br><br>";
+                exec("start {$hexPath}");
+            }
+
+            echo "<hr>";
+
+            sleep(1);
+
+            // Base64 format
+            echo "<h3>Test 3: Base64 Format</h3>";
+            $pdfBase64 = $this->invoiceService->invoicePdf($invoiceId, null, 'base64');
+
+            if (is_string($pdfBase64)) {
+                $base64Path = "C:/Users/mehedi/Documents/{$invoiceId}.base64.txt";
+                file_put_contents($base64Path, $pdfBase64);
+                echo "✓ Base64 file saved successfully at: {$base64Path}<br>";
+                echo "✓ Base64 string length: " . strlen($pdfBase64) . " characters<br><br>";
+                exec("start {$base64Path}");
+            }
+
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testCreatInvoice()
+    {
+        $params = [
+            "invoice" => [
+                "customer_purchase_order_id" => "customer-postman-1",
+                "issue_date" => "2025-01-29",
+                "due_date" => "2025-01-29",
+                "price_tax_inclusive" => "true",
+                "account_id" => "EXAC-3A80JQUK997H-11008",
+                "custom_attributes" => [],
+                "lines" => [
+                    [
+                        "item_id" => "EXIT-M6H14161ZT9A-11006",
+                        "item_quantity" => "1",
+                        "item_price_snapshot" => [
+                            "pricing_rule" => [
+                                "price" => "100"
+                            ]
+                        ],
+                        "discount" => "11",
+                        "discount_type" => "PERCENTAGE",
+                        "item_accounting_code" => "SALES_REVENUE",
+                        "item_tax_exampt_when_sold" => "false"
+                    ]
+                ]
+            ]
+        ];
+        try {
+            $invoice = $this->invoiceService->createInvoice($params,'v3');
+            echo '<pre>' . json_encode($invoice, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
 }
 
@@ -180,3 +273,6 @@ class InvoiceManager
 //    $invoiceManager->testCreateAmend();
 //    $invoiceManager->testDelete();
 //    $invoiceManager->testReadPdf();
+//    $invoiceManager->testCreatInvoice();
+//    $invoiceManager->testInvoicePdf();
+//    $invoiceManager->testCreatInvoice();

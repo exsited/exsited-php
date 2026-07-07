@@ -21,6 +21,7 @@ class ProformaInvoicesManager
         $this->proformaInvoicesService = new ProformaInvoicesData($apiConfig);
     }
 
+
     public function testReadAllProformaInvoices()
     {
         try {
@@ -35,9 +36,9 @@ class ProformaInvoicesManager
 
     public function testReadProformaInvoicesDetails()
     {
-        $id = 'INV-32299569';
+        $id='INV-60828777';
         try {
-            $response = $this->proformaInvoicesService->readProformaInvoicesDetails($id, 'v3');
+            $response = $this->proformaInvoicesService->readProformaInvoicesDetails($id,'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -62,9 +63,9 @@ class ProformaInvoicesManager
                 ]
             ]
         ];
-        $id = 'INV-32299569';
+        $id='INV-76GOU2-1267';
         try {
-            $invoice = $this->proformaInvoicesService->createProformaInvoicesPayment($id, $params, 'v2');
+            $invoice = $this->proformaInvoicesService->createProformaInvoicesPayment($id, $params,'v2');
             echo '<pre>' . json_encode($invoice, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -75,7 +76,6 @@ class ProformaInvoicesManager
 }
 
 
-$invoiceManager = new ProformaInvoicesManager(2);
-//$invoiceManager->testReadAllProformaInvoices();
-//$invoiceManager->testReadProformaInvoicesDetails();
-$invoiceManager->testCreateProformaInvoicePayment();
+    $invoiceManager = new ProformaInvoicesManager(1);
+
+    $invoiceManager->testReadAllProformaInvoices();

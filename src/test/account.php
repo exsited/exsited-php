@@ -27,7 +27,7 @@ class AccountManager
     {
         try {
             $queryParams = '?order_by=created_on&direction=desc&limit=2';
-            $response = $this->accountService->readAll(null, $queryParams);
+            $response = $this->accountService->readAll("v2", $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -59,8 +59,8 @@ class AccountManager
     public function testCreate()
     {
         $params = [
-            "name" => "abcd",
-            "email_address" => "basicinformationsami123@gmail.com",
+            "name" => "abcds",
+            "email_address" => "basicinformaasationsami123@gmail.com",
         ];
 
         try {
@@ -700,6 +700,63 @@ class AccountManager
         }
     }
 
+    public function testReadFinancialSummary()
+    {
+        try {
+            echo "\n=== Testing: Get Financial Summary (All Accounts) ===\n";
+            $response = $this->accountService->readFinancialSummary();
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage() . "\n";
+        }
+    }
+
+    public function testReadAccountFinancialSummary()
+    {
+        $accountId = '2W8ERZ';
+        try {
+            echo "\n=== Testing: Get Financial Summary by Account ({$accountId}) ===\n";
+            $response = $this->accountService->readAccountFinancialSummary($accountId);
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage() . "\n";
+        }
+    }
+
+    public function testReadUnlinkedOrders()
+    {
+        $accountId = '9UH433';
+        try {
+            $response = $this->accountService->readUnlinkedOrders($accountId, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testReadLinkedOrders()
+    {
+        $accountId = '9UH433';
+        try {
+            $response = $this->accountService->readLinkedOrders($accountId, 'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testPurge()
+    {
+        $id ="930735";
+
+        try {
+            $response = $this->accountService->purge($id,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 }
 
 
@@ -717,8 +774,7 @@ $credentials = [
 
     }
 ];
-    $accountManager = new AccountManager($credentials);
-    $accountManager->testReadAll();
+    $accountManager = new AccountManager(0);
 //    $accountManager2 = new AccountManager(1);
 //    $accountManager2->testReadAll();
 //    $accountManager->testReadDetails();
@@ -759,3 +815,6 @@ $credentials = [
 //    $accountManager->testReactivate();
 //    $accountManager->testReadCustomObjectDetails();
 //    $accountManager->testReadCustomObject();
+//    $accountManager->testReadUnlinkedOrders();
+//    $accountManager->testReadLinkedOrders();
+//    $accountManager->testPurge();

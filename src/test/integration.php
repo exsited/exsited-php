@@ -26,7 +26,8 @@ class IntegrationManager
     public function testReadAll()
     {
         try {
-            $response = $this->integrationService->readAll('v2');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->integrationService->readAll('v2', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -317,7 +318,7 @@ class IntegrationManager
 
     public function testCheckConnection()
     {
-        $integrationUuid = '922ffe4a-439f-4b1c-b671-d4387bc2ec59';
+        $integrationUuid = 'b610a67b-04f4-4034-9332-050bf3b6b44a';
         try {
             $response = $this->integrationService->checkConnection($integrationUuid,'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
@@ -484,7 +485,7 @@ class IntegrationManager
 
     public function testCreateSaveConnection()
     {
-        $integrationUuid = "XERO";
+        $integrationUuid = "b610a67b-04f4-4034-9332-050bf3b6b44a";
         try {
             $response = $this->integrationService->createSaveConnection($integrationUuid,'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
@@ -495,7 +496,7 @@ class IntegrationManager
 
     public function testReadConnectionAccount()
     {
-        $integrationUuid = "XERO";
+        $integrationUuid = "b610a67b-04f4-4034-9332-050bf3b6b44a";
         try {
             $response = $this->integrationService->readConnectionAccount($integrationUuid,'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
@@ -663,16 +664,16 @@ class IntegrationManager
 
 }
 
-$integrationManager = new IntegrationManager();
+$integrationManager = new IntegrationManager(4);
 //$integrationManager->testReadAll();
 //$integrationManager->testCreate();
 //$integrationManager->testDelete();
 //$integrationManager->testEnable();
 //$integrationManager->testDisable();
 //$integrationManager->testRead();
-//$integrationManager->testReadPartner();
+$integrationManager->testReadPartner();
 //$integrationManager->testReadPartnerDetails();
-//$integrationManager->testReadAutomation();
+$integrationManager->testReadAutomation();
 //$integrationManager->testReadAutomationDetails();
 //$integrationManager->testCreatePartnerFunction();
 //$integrationManager->testUpdateConfiguration();
@@ -696,6 +697,11 @@ $integrationManager = new IntegrationManager();
 //$integrationManager->testSyncCurrencies();
 //$integrationManager->testSyncAccountingCodes();
 $integrationManager->testSyncTaxes();
+//$integrationManager->testReadConfiguration();
+//$integrationManager->testEnablePartnerDetails();
+//$integrationManager->testDisablePartnerDetails();
+$integrationManager->testCheckConnection();
+
 
 
 

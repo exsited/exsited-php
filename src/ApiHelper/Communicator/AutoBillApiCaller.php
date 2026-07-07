@@ -57,6 +57,11 @@ class AutoBillApiCaller
         return $this->makeCurlCall($url, self::GET, null, $params, $headers);
     }
 
+    public function GET_RAW($url, $headers = null)
+    {
+        return $this->makeCurlCallRaw($url, self::GET, $headers);
+    }
+
 
     public function POST($url, $params, $headers = null){
         return $this->makeCurlCall($url, self::POST, $params, null, $headers);
@@ -116,6 +121,50 @@ class AutoBillApiCaller
         if (curl_errno($ch)) {
             $response = curl_error($ch);
         }
+        curl_close($ch);
+
+        return array(
+            "code" => $httpStatus,
+            "response" => $response
+        );
+    }
+
+    private function makeCurlCallRaw($url, $method = self::GET, $headers = null)
+    {
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->reQuestTimeOut);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+        curl_setopt($ch, CURLOPT_FRESH_CONNECT, false);
+        curl_setopt($ch, CURLOPT_FORBID_REUSE, false);
+
+        if ($headers == null || !is_array($headers)) {
+            $headers = array();
+        }
+
+        if (count($headers) > 0) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        }
+
+        $response = curl_exec($ch);
+        $curlError = curl_errno($ch);
+        $curlErrorMsg = curl_error($ch);
+        $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($curlError) {
+            curl_close($ch);
+            return array(
+                "code" => 0,
+                "response" => "cURL Error ({$curlError}): {$curlErrorMsg}"
+            );
+        }
+
         curl_close($ch);
 
         return array(

@@ -103,6 +103,28 @@ class NotesManager
         }
     }
 
+    public function testReadAllNotes()
+    {
+        try {
+            $response = $this->notesService->readAllNotes('v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testReadAllNotesByUser()
+    {
+        $queryParams = "?user=27c435d8-f3ce-4a3c-b104-979ca4ea9ef7";
+
+        try {
+            $response = $this->notesService->readAllNotes('v3', $queryParams);
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
     public function testReadDetails()
     {
         $noteUuid="de317fd7-9af0-4f0b-ac28-0c4ad857ab03";
@@ -565,6 +587,8 @@ class NotesManager
 }
 
 $notesManager = new NotesManager();
+//$notesManager->testReadAllNotes();
+//$notesManager->testReadAllNotesByUser();
 //$notesManager->testReadDetails();
 //$notesManager->testReadAccountAllNotes();
 //$notesManager->testCreateAccountNotes();

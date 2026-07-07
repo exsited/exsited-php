@@ -351,5 +351,34 @@ class AutoBillOAuth2ApiCaller
         return $response;
     }
 
+    public function GET_RAW($url, $headers = array())
+    {
+        $headersWithToken = $this->setAccessTokenInHeader($headers);
+        $response = $this->httpCommunicator->GET_RAW($url, $headersWithToken);
+
+        if (isset($response['code']) && in_array($response['code'], [200, 201, 202, 204])) {
+            $this->loop = 0;
+            return $response['response'];
+        } elseif (isset($response['code']) && $response['code'] === 401) {
+            if ($this->loop < 3) {
+                $this->loop++;
+                try {
+                    $this->renewAccessToken($response['code']);
+                    return $this->GET_RAW($url, $headers);
+                } catch (AutoBillApiException $e) {
+                    throw new AutoBillApiException("Token renewal failed: " . $e->getMessage());
+                }
+            } else {
+                throw new AutoBillApiException("Token renewal failed after 3 attempts.");
+            }
+        } else {
+            $errorMsg = "Failed to fetch PDF: HTTP " . ($response['code'] ?? 'NULL');
+            if (isset($response['response']) && is_string($response['response'])) {
+                $errorMsg .= " - " . substr($response['response'], 0, 200);
+            }
+            throw new AutoBillApiException($errorMsg);
+        }
+    }
+
 
 }

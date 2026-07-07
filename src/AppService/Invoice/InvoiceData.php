@@ -19,11 +19,11 @@ Class InvoiceData
         $this->apiConfig=$apiConfig;
     }
 
-    public function readALl($apiVersion = null){
+    public function readALl($apiVersion = null, $queryParams = null){
         try{
             $requestBuilder= new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
             $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
-            return $requestBuilder->callResource(ApiResource::INVOICE, AutoBillApiSchemeHelper::GET,null,[],$apiVersion);
+            return $requestBuilder->callResource(ApiResource::INVOICE, AutoBillApiSchemeHelper::GET,null,[],$apiVersion, $queryParams);
         } catch (AutoBillApiException $e){
             throw new AutoBillApiException($e->getMessage());
         }
@@ -61,7 +61,6 @@ Class InvoiceData
         }
     }
 
-
     public function readDetailsInformation($id,$apiVersion = null)
     {
         try {
@@ -83,7 +82,6 @@ Class InvoiceData
         }
     }
 
-
     public function createAmend($params,$id,$apiVersion = null)
     {
         try {
@@ -94,6 +92,7 @@ Class InvoiceData
             throw new AutoBillApiException($e->getMessage());
         }
     }
+
     public function delete($id,$apiVersion = null){
         try{
             $requestBuilder= new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
@@ -115,5 +114,26 @@ Class InvoiceData
         }
     }
 
+    public function invoicePdf($id, $apiVersion = null, $format = 'binary')
+    {
+        try {
+            $requestBuilder = new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? 'v2';
+            return $requestBuilder->callResourceRaw(ApiResource::INVOICE, $id, 'pdf', $apiVersion, [], $format);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
+
+    public function createInvoice($params,$apiVersion = null)
+    {
+        try {
+            $requestBuilder= new AutoBillRequestBuilder($this->apiConfig->getAuthCredentialData());
+            $apiVersion = $apiVersion ?? SdkVersionManager::getApiVersion();
+            return $requestBuilder->callResourceAttribute(ApiResource::INVOICE, AutoBillApiSchemeHelper::POST, null, $params, null,$apiVersion);
+        } catch (AutoBillApiException $e) {
+            throw new AutoBillApiException($e->getMessage());
+        }
+    }
 
 }

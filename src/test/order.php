@@ -38,7 +38,7 @@ class OrderManager
     {
         $id = 'ORD-76GOU2-1261';
         try {
-            $response = $this->orderService->readDetails($id, 'v3');
+            $response = $this->orderService->readDetails($id,'v3');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -47,8 +47,8 @@ class OrderManager
 
     public function testGetBulkOrderDetails()
     {
-        $bulk_id = '8d4e9d51-853c-4f59-8d08-4e0b45301c8f';
-        $request_id = 'b4c54d34-05b5-40dd-92a2-0320af72e74a';
+        $bulk_id = 'ORD-76GOU2-1261B';
+        $request_id = 'ORD-76GOU2-1261R';
         try {
             $response = $this->orderService->getBulkOrderDetails($bulk_id,$request_id,'v2');
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
@@ -111,6 +111,16 @@ class OrderManager
         }
     }
 
+    public function testReadLabourOrders()
+    {
+        $labourID = '6f3e1272-f558-48dd-9ef1-2b82bee8583f';
+        try {
+            $response = $this->orderService->readLabourOrders($labourID,'v3');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 
 
     public function testCreate()
@@ -838,7 +848,7 @@ class OrderManager
         $id = "ORD-76GOU2-1288";
         $params = [
             "effective_date" => "2025-01-05",
-            "effective_immediately" => true,
+
             "lines" => [
                 [
                     "item_uuid"=> "963411ff-3387-4730-9c07-a3466b17dc4e",
@@ -951,10 +961,90 @@ class OrderManager
         }
     }
 
+    public function testOrderPdf()
+    {
+        $orderId = "ORD-3X6JF3-0645";
+
+        try {
+            // Binary format
+            echo "<h3>Test 1: Binary Format</h3>";
+            $pdfBinary = $this->orderService->orderPdf($orderId, null, 'binary');
+
+            if (is_string($pdfBinary)) {
+                $pdfPath = "C:/Users/mehedi/Documents/{$orderId}.pdf";
+                file_put_contents($pdfPath, $pdfBinary);
+                echo "✓ PDF saved successfully at: {$pdfPath}<br>";
+                echo "✓ File size: " . strlen($pdfBinary) . " bytes<br>";
+                exec("start {$pdfPath}");
+            }
+
+            echo "<hr>";
+
+            // Small delay to avoid rate limiting
+            sleep(1);
+
+            // Hexadecimal format
+            echo "<h3>Test 2: Hex Format</h3>";
+            $pdfHex = $this->orderService->orderPdf($orderId, null, 'hex');
+
+            if (is_string($pdfHex)) {
+                $hexPath = "C:/Users/mehedi/Documents/{$orderId}.hex";
+                file_put_contents($hexPath, $pdfHex);
+                echo "✓ Hex file saved successfully at: {$hexPath}<br>";
+                echo "✓ Hex string length: " . strlen($pdfHex) . " characters<br><br>";
+                exec("start {$hexPath}");
+            }
+
+            echo "<hr>";
+
+            sleep(1);
+
+            // Base64 format
+            echo "<h3>Test 3: Base64 Format</h3>";
+            $pdfBase64 = $this->orderService->orderPdf($orderId, null, 'base64');
+
+            if (is_string($pdfBase64)) {
+                $base64Path = "C:/Users/mehedi/Documents/{$orderId}.base64.txt";
+                file_put_contents($base64Path, $pdfBase64);
+                echo "✓ Base64 file saved successfully at: {$base64Path}<br>";
+                echo "✓ Base64 string length: " . strlen($pdfBase64) . " characters<br><br>";
+                exec("start {$base64Path}");
+            }
+
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testChangeStatus()
+    {
+        $params = [
+            "workflow_status" => "Quote Approved"
+        ];
+        $id = 'ORD-9Q4NPX-0632';
+        try {
+            $response = $this->orderService->changeStatus($params, $id, 'v2');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function testConvertToOrder()
+    {
+        $id = 'ORD-8RP9U5-0641';
+        try {
+            $response = $this->orderService->convertToOrder($id, 'v2');
+            echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 }
 
 
-$orderManager = new OrderManager(3);
+$orderManager = new OrderManager(0);
 //    $orderManager->testReadAll();
 //    $orderManager->testCreateOrderUsages();
 //    $orderManager->testReadInformation();
@@ -963,6 +1053,7 @@ $orderManager = new OrderManager(3);
 //    $orderManager->testReactivate();
 //    $orderManager->testChange();
 //    $orderManager->testReadAccountOrders();
+//    $orderManager->testReadLabourOrders();
 //    $orderManager->testReadBillingPreferences();
 //    $orderManager->testReadOrderLines();
 //    $orderManager->testReadDetailsOrderLine();
@@ -985,5 +1076,8 @@ $orderManager = new OrderManager(3);
 //    $orderManager->testChangePreview();
 //    $orderManager->testContractAdjustmentPreview();
 //    $orderManager->testCreateOrderAccept();
-    $orderManager->testGetBulkOrderDetails();
+//    $orderManager->testGetBulkOrderDetails();
+//    $orderManager->testOrderPdf();
+//    $orderManager->testChangeStatus();
+    $orderManager->testConvertToOrder();
 

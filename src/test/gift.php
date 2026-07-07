@@ -44,7 +44,8 @@ class GiftManager
     public function testReadAll()
     {
         try {
-            $response = $this->giftService->readAll('v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->giftService->readAll('v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -84,7 +85,8 @@ class GiftManager
         $uuId="2addae15-f1b6-4d51-84a9-304c8adbf5ee";
 
         try {
-            $response = $this->giftService->readAllocations($uuId,'v3');
+            $queryParams = '?order_by=created_on&direction=desc&limit=2';
+            $response = $this->giftService->readAllocations($uuId,'v3', $queryParams);
             echo '<pre>' . json_encode($response, JSON_PRETTY_PRINT) . '</pre>';
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -196,7 +198,7 @@ $giftManager = new GiftManager();
 //$giftManager->testCreate();
 //$giftManager->testReadAll();
 //$giftManager->testAllocate();
-//$giftManager->testReadAllocations();
+$giftManager->testReadAllocations();
 //$giftManager->testReadDetails();
 //$giftManager->testDeallocate();
 //$giftManager->testChange();
